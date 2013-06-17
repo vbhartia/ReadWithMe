@@ -90,7 +90,7 @@ urlpatterns = patterns('',
     # - Render the admin view
   url(r'^admin/', include(admin.site.urls)),
 
-  urlpatterns += staticfiles_urlpatterns()
-
-    
 )
+
+urlpatterns += staticfiles_urlpatterns()
+
