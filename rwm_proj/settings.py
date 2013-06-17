@@ -69,6 +69,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    '/Users/varunbhartia/development_projects/rwm/rwm_proj/static/rwm_proj',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -108,6 +109,7 @@ ROOT_URLCONF = 'rwm_proj.urls'
 WSGI_APPLICATION = 'rwm_proj.wsgi.application'
 
 TEMPLATE_DIRS = (
+    '/Users/varunbhartia/development_projects/rwm/rwm_proj/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -124,6 +126,7 @@ INSTALLED_APPS = (
      'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
      'django.contrib.admindocs',
+     'rwm_app'
 )
 
 # A sample logging configuration. The only tangible logging

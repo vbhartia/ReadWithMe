@@ -1,0 +1,51 @@
+<!- templates/nav.html>
+<!-Page Setup>
+<!- Setup HTML for all Pages>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% load staticfiles %}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<head>
+    <link rel="stylesheet" href="{% static "RWM.css" %}" type="text/css" />
+    
+    <!-- Le styles -->
+    <!--<link href="{% static "bootstrap/css/bootstrap.css" %}"                  rel="stylesheet">
+    <!--<link href="{% static "bootstrap/css/bootstrap-responsive.css" %}"       rel="stylesheet">
+
+    <!-- Le javascript ---->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+    
+</head>
+
+
+<div class="nav_link" id="nav">
+    
+    <div id="nav_logo" >			
+        <a href ="/my_articles/">
+            Read With Me
+        </a>
+    </div>
+    <br />    
+
+    <div id="nav_user_profile">
+       {{ user.first_name }} {{ user.last_name }}    
+        <br /><a class="page_text" href = "/logout/"> Log Out </a>
+    </div>
+
+    <br />
+    <br />
+
+    <div id="nav_menu" class="page_text">
+        {% if user != '' %}
+            <a href = "/my_articles/"> My Articles | </a>
+        {% endif %}  
+    </div>   
+    <br />    
+    <br />
+
+</div>

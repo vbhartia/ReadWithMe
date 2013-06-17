@@ -1,0 +1,129 @@
+<!# templates/homepage.html>
+<! Homepage>
+
+<head>
+<title>Read With Me </title>
+</head>
+
+<br/>
+
+<div id="homepage_container_id" class="homepage_container_class">
+    
+    <div id="homepage_logo_id" class="homepage_logo_class">
+        <center>
+            Welcome to Read With Me 
+        </center>
+    </div>
+    
+    <br />
+    
+    <div id="homepage_add_reader_id" class="homepage_add_reader_class">
+       <table border='1' width='100%'>
+            <tr>
+                <td width='50%'>
+                    <br />
+                        <center>
+                            Add the Read With Me Reader instructions
+                        </center>
+                    <br />
+                </td>
+
+                <td>
+                    <center>
+                        Click here to add read with me
+                        
+                        <a id="bookmarkme" href="#" rel="sidebar" title="add to bookmarks">
+                            Add read with me reader
+
+
+                        </a>
+                        
+                    </center>
+                    
+                </td>
+            </tr>
+       </table>
+        
+
+    </div>
+    
+    <br />
+    <br />
+    
+    <div class="homepage_instructions_container_class">
+    
+        <table border='1' width='100%'>
+            <tr>
+                <td>
+                    <div class="hompage_instruction_block_class">
+                        <br/>
+                        <br/>
+                            First step - use the reader
+                                - Get rid of the ads
+                                - Nicely spaced, clean reading view
+                        <br/>
+                    </div>                
+                </td>
+                <td>
+                    <div class="hompage_instruction_block_class">
+                        <br/>
+                        <br/>
+                            Second step - Leave your thoughts in the article
+                                - Add summary text
+                                - Add comments inline
+                        <br/>
+                    </div>                
+                </td>
+                <td>
+                    <div class="hompage_instruction_block_class">
+                        <br/>
+                        <br/>
+                            Share your thoughts and the article with your friends
+                                - Friends can see not only your comments, but your thougthts as well!
+                        <br/>
+                    </div>                
+                </td>            
+            </tr>
+        </table>
+    </div>    
+</div>
+
+<script>
+    // Add the Bookmarklet
+
+    var bookmarklet_javascript = ""
+    bookmarklet_javascript += "javascript:(function(){"
+
+    // Ensure JQuery is available
+    //bookmarklet_javascript += "add_jquery=document.createElement('SCRIPT');"
+    //bookmarklet_javascript += "add_jquery.type='text/javascript';"
+    //bookmarklet_javascript += "add_jquery.src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'"
+    //bookmarklet_javascript += "document.getElementsByTagName('head')[0].appendChild(add_jquery);"    
+    
+    // Add the Read With Me script
+    bookmarklet_javascript += "RWM_Script=document.createElement('SCRIPT');"
+    bookmarklet_javascript += "RWM_Script.type='text/javascript';"
+    bookmarklet_javascript += "RWM_Script.src='http://127.0.0.1:8000/static/rwm_reader.js?x='+(Math.random());"
+    bookmarklet_javascript += "document.getElementsByTagName('head')[0].appendChild(RWM_Script);"
+    bookmarklet_javascript += "})();"
+
+    $('#bookmarkme').attr("href", bookmarklet_javascript)
+
+
+    $(function() {
+        $('#bookmarkme').click(function() {
+            if (window.sidebar && window.sidebar.addPanel) { // Mozilla Firefox Bookmark
+                window.sidebar.addPanel(bookmarklet_javascript);
+            } else if(window.external && window.external.AddFavorite) { // IE Favorite
+                window.external.AddFavorite(bookmarklet_javascript); 
+            } else if(window.opera && window.print) { // Opera Hotlist
+                this.title=document.title;
+                return true;
+            } else { // webkit - safari/chrome
+                alert('Press ' + (bookmarklet_javascript));
+            }
+        });
+    });
+
+</script>
+

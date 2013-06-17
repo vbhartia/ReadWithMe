@@ -1,0 +1,356 @@
+
+html { 
+  background: url('/static/NewsPaper.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+body {
+
+    }
+    
+h1 {    
+
+    }
+
+table {
+
+    }
+td {
+
+    }
+p {
+    
+    }
+
+/* Page Text */
+
+.page_text{
+    color:#FFFFFF; 
+    font-family: 'courier new', monospace;
+	font-size: 15pt;
+}
+
+/*size for outer container for content */    
+.outer_container{
+    background-color:rgba(255, 255, 255, .5); 
+    padding: 2px; 
+    border-radius: 5px; 
+    width: 98%;
+    margin: auto;
+    border-style:solid;
+    border-color:black;
+}
+
+.section_title{
+    word-spacing:10px; 
+    color:#000000; 
+    font-family: 'courier new', monospace;
+    font-size: 20pt;
+    font-weight:bold;
+    text-align:center;
+}
+
+.section_create_new_item{
+    background-color:rgba(255, 255, 255, .8);
+    width: 98%;
+    margin: auto;
+    padding: 2px;
+    border-radius: 5px;
+    border-style:solid;
+    border-color:black;
+}
+
+.section_create_new_item_text{    
+    color:black; 
+    font-family: 'courier new', monospace;
+    font-size:15pt;
+    font-weight:bold;
+    text-align:center;
+}
+
+.action:hover {
+    color:black;
+    background-color:yellow;
+}
+
+.section_item{
+    background-color:rgba(255, 255, 255, .8);
+    width:98%;
+    margin:auto;
+    padding:2px;
+    border-radius:5px;
+    border-style:solid;
+    border-color:black;
+    overflow: hidden;
+}
+
+.logo{
+    word-spacing:10px; 
+    font-family:Algerian;
+    font-weight:bold;
+}
+
+/*****************************************PAGE SPECIFIC********************************* 
+/* Dash Board */
+
+.dashboard_group_layout{
+    background-color:rgba(255, 255, 255, 1); 
+    float: left;
+    width:300px;
+    padding:5px;
+    border-style:solid;
+    border-color:white black white white;
+    overflow:hidden
+}
+
+.dashboard_section_item{
+    background-color:rgba(255, 255, 255, .8);
+    width:98%;
+    height:220px;
+    margin:auto;
+    padding:2px;
+    border-radius:5px;
+    border-style:solid;
+    border-color:black;
+    overflow:auto;
+}
+
+.dashboard_group_title{
+    word-spacing:10px;  
+    color:black; 
+    font-size: 15pt;
+    font-family:Algerian;
+    font-weight:bold;
+    text-align:center;
+}
+
+.dashboard_group_title a:visited, .dashboard_group_title a:link {
+    color:black;
+}
+    
+.dashboard_group_title a:hover {
+    color:red;
+}
+
+.dashboard_group_description{
+    word-spacing:10px;  
+    color:black; 
+    font-size:12pt;
+    font-family:"Times New Roman";
+}
+
+.dashboard_group_created_by{
+    text-align:left
+}
+
+.dashboard_group_members{
+    text-align:left
+}
+
+.dashboard_group_members_tab{
+    padding: 0 20px; 
+}
+
+.dashboard_article_container{
+    background-color:rgba(255, 255, 255, 0); 
+    float:left;
+    border-radius:2px;
+    padding:5px;
+    width:70%;
+}
+
+.dashboard_article_shared{
+    word-spacing:10px;  
+    color:black; 
+    font-size: 15pt;
+    font-family:Algerian;
+    font-weight:bold;
+    text-align:center;
+}
+
+.dashboard_article_table_headline, 
+.dashboard_article_table_headline a:link,
+.dashboard_article_table_headline a:visited{ 
+    color:black; 
+    font-size: 15pt;
+    font-family:Times New Roman;
+    text-align:center;
+}
+
+.dashboad_new_article_in_group_class,
+.dashboad_new_article_in_group_class a:link,
+.dashboad_new_article_in_group_class a:visited{
+    color:black; 
+    font-size: 15pt;
+    font-family:'courier new';
+    text-align:center;
+
+} 
+
+.dashboard_article_table_headline:hover{
+    background-color:yellow;
+    color:red; 
+    font-weight:bold;
+    font-family:Times New Roman;
+}
+
+.dashboard_group_articles_table, .dashboard_group_articles_table th, .dashboard_group_articles_table td{
+    text-align:center;
+}
+
+/* Group Page */
+.group_group_table, th, td{
+   text-align:center;
+}
+
+.table_label {
+    text-align: right;
+}
+
+/*************************************** Homepage *************************/
+.homepage_container_class{
+    background-color:rgba(0, 0, 0, .5); 
+    width:95%;
+    height:95%;
+    z-index:15;
+    padding: 10px;
+    margin:auto;
+}
+
+.homepage_logo_class{
+    word-spacing:10px; 
+    padding:5px; 
+    color:#FFFFFF; 
+    font-size: 20pt;
+    font-family:Algerian;
+    font-weight:bold;
+}
+
+.homepage_instructions_container_class{
+    word-spacing:10px; 
+    padding:5px; 
+    color:#FFFFFF; 
+    font-size: 20pt;
+    font-family:Algerian;
+    font-weight:bold;
+}
+
+.hompage_instruction_block_class{
+    background-color:white;
+    border-style:solid;
+    border-color:black;
+    color:black;
+    font-family: 'courier new', monospace;   
+
+}
+
+.homepage_add_reader_class{
+    background-color:white;
+    border-style:solid;
+    border-color:black;   
+
+}
+    
+/*************************************** Nav *************************/
+#nav {
+    left:0; 
+    top:0;   
+    width:100%; 
+    height:100px; 
+    background-color:rgba(0, 0, 0, .7);
+}
+
+#nav_logo{
+    word-spacing:10px; 
+    padding:5px; 
+    float:left; 
+    color:#FFFFFF; 
+    font-size:20pt;
+    font-family:Algerian;
+    font-weight: bold;
+}
+
+#nav_user_profile{
+    padding:5px; 
+    float:right; 
+    color:#faebd7; 
+    font-family:Algerian;
+    font-weight:bold;
+    font-size:15pt;
+}
+
+#nav_menu{
+    color: white; 
+    padding:5px;
+    font-size:15px;
+}
+
+
+.nav_link a:visited, .nav_link a:link {
+    color:#FFFFFF;
+}
+    
+.nav_link a:hover {
+    color:yellow;
+}
+    
+/* Article Presentation */
+
+#article_group_user_info_id{
+    overflow:auto;
+}
+
+.article_container_class{
+    background-color:rgba(200, 200, 200, 1); 
+}    
+
+.article_settings{
+    text-align:center;
+}
+
+.article_reading_controls_class{
+    text-align:center;
+    background-color:rgba(128, 128, 128, .5);
+    border-style:solid;
+    border-color:black;   
+}
+
+.article_reading_controls_buttons_class{
+    background-color:rgba(255, 255, 255, 1);
+    padding-right:5px;
+    padding-left:5px;
+    border-style:solid;
+    border-color:black;
+    border-width:1px;    
+}
+
+/* Article Text Settings */
+.article_headline_text{
+    text-align:center;
+    font-weight:bold;
+    font-size:25pt;
+}
+
+.article_summary_content{
+    background-color:rgba(128, 128, 128, .5);
+    border-style:solid;
+    border-color:black;
+    width:98%;
+    height:100px;
+    margin:auto;
+    overflow:auto;    
+}
+
+.article_content_class{
+    background-color:rgba(255, 255, 255, 1);
+    width:75%;
+    padding:20px;
+}
+
+.article_comment_class{
+    width:20%;
+    float:right;
+}

@@ -1,0 +1,161 @@
+.container_RWM_reader_class
+{
+    position : fixed;
+    top : 0;
+    left : 0;
+    width : 100%;
+    height : 100%;
+    background-color:rgba(0, 0, 0, .5);
+    z-index : 10000000;
+    padding : 5pt
+}
+
+.iFrame_container_RWM_reader_class
+{
+    margin : auto auto;
+    width : 95%;
+    height : 95%;
+    background : black;  
+    overflow : hidden
+}
+
+#header_RWM_Viewer
+{   
+    left:0; 
+    top:0;   
+    width:100%; 
+    height:100px; 
+    background-color:rgba(0, 0, 0, .7);
+}
+
+#logo_RWM_Viewer
+{
+    word-spacing:10px; 
+    padding:5px; 
+    float:left; 
+    color:#FFFFFF; 
+    font-size:20pt;
+    font-family:Algerian;
+    font-weight: bold;
+}
+
+#nav_user_profile_RWM_Viewer
+{
+    padding:5px; 
+    float:right; 
+    color:#faebd7; 
+    font-family:Algerian;
+    font-weight:bold;
+    font-size:15pt;
+}
+
+.page_text_RWM_Viewer
+{
+    color:#FFFFFF; 
+    font-family: 'courier new', monospace;
+	font-size: 15pt;
+}
+
+#nav_menu_RWM_Viewer
+{
+    color:white; 
+    padding:5px;
+    font-size:15px;
+}
+
+
+.article_content_RWM_Viewer_class
+{
+    left: 10px;
+    width : 100%;
+    background : white;
+    padding : 10pt;    
+    text-align: left;
+}
+
+#RWM_headline
+{
+    font-size : 20pt;
+}
+
+#RWM_news_source
+{
+    font-size : 12pt;
+}
+
+#RWM_para
+{
+    font-size : 12pt;
+}
+
+#article_comments_id
+{
+    position: relative;
+    font-size : 12pt;
+    width : 100%;
+    height : 100%;
+}
+
+.rwm_comment_class
+{
+    position: absolute;
+    left : 30px;
+    font-size : 12pt;
+    border-style : solid;
+    border-color : black;
+    width : 200px;
+    height : 100px;
+    background-color: yellow;
+    padding : 5pt; 
+}
+
+.links_RWM_Viewer a:visited, .links_RWM_Viewer a:link {
+    color:#FFFFFF;
+}
+    
+.links_RWM_Viewer a:hover {
+    color:yellow;
+}
+
+.article_reading_controls_RWM_Viwer_class
+{
+    text-align:center;
+    background-color:rgba(255, 255, 255, 0.5);
+    border-style:solid;
+    border-color:black;
+
+}
+
+.article_reading_controls_buttons_RWM_Viewer_class
+{
+    text-align:center;
+    background-color:rgba(255, 255, 255, 0);
+    border-style:solid;
+    border-color:black;
+    font-size : 10pt;
+    border-width:2px;
+}
+
+.overall_comment_RWM_Viewer_class
+{
+    height:200px;
+    text-align:center;
+    background-color:rgba(255, 255, 255, 0);
+    border-style:solid;
+    border-color:black;
+    font-size : 10pt;
+    border-width:2px;
+
+}
+
+.leave_comment_RWM_Viewer_class
+{
+    height:50px;
+    text-align:center;
+    background-color:yellow;
+    border-style:solid;
+    border-color:black;
+    font-size : 10pt;
+    border-width:2px;
+
+}

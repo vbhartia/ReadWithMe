@@ -1,0 +1,400 @@
+<!- templates/nav.html>
+<!-Page Setup>
+<!- Setup HTML for all Pages>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% load staticfiles %}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<head>
+    <link rel="stylesheet" href="{% static "RWM.css" %}" type="text/css" />
+    <link rel="stylesheet" href="{% static "RWM_reader.css" %}" type="text/css" />
+</head>
+
+<div class="nav_link" id="nav">
+    
+    <div id="nav_logo" >			
+        <a href ="/my_articles/" target="_blank">
+            Read With Me
+        </a>
+    </div>
+    <br />    
+
+    <div id="nav_user_profile">
+       {{ user.first_name }} {{ user.last_name }}    
+        <br /><a class="page_text" href = "/logout/" target="_blank"> Log Out </a>
+    </div>
+
+    <br />
+    <br />
+
+    <div id="nav_menu" class="page_text">
+        {% if user != '' %}
+            <a href = "/my_articles/" target="_blank"> My Articles | </a>
+        {% endif %}  
+    </div>   
+    <br />    
+    <br />
+
+</div>
+
+<!-------------------------------------- Reading Content ------------------------------------->
+
+<!-------------------------------------- Reading Controls ------------------------------------->
+<div id='article_reading_controls_RWM_Viwer_id' class='article_reading_controls_RWM_Viwer_class'>
+    <span class='page_text_RWM_Viewer'>Change Article Presentation</span>
+        
+    <br />
+    <br />
+    <a id='background_text_setting_id'      class='article_reading_controls_buttons_RWM_Viewer_class'>
+        Black Background, White Text
+    </a>
+
+    <a id='increase_text_size_id'           class='article_reading_controls_buttons_RWM_Viewer_class'>
+        Increase Text Size 
+    </a>
+        
+    <a id='decrease_text_size_id'           class='article_reading_controls_buttons_RWM_Viewer_class'>
+        Decrease Text Size 
+    </a>
+
+    <a id='increase_line_spacing_id'        class='article_reading_controls_buttons_RWM_Viewer_class'>
+        Increase Line Spacing 
+    </a>
+    
+    <a id='decrease_line_spacing_id'        class='article_reading_controls_buttons_RWM_Viewer_class'>
+        Decrease Line Spacing 
+    </a>
+    
+    <a id='increase_word_spacing_id'        class='article_reading_controls_buttons_RWM_Viewer_class'>
+        Increase Word Spacing 
+    </a>
+    
+    <a id='decrease_word_spacing_id'        class='article_reading_controls_buttons_RWM_Viewer_class'>
+        Decrease Word Spacing 
+    </a>
+
+    <a id='default_settings_id'             class='article_reading_controls_buttons_RWM_Viewer_class'>
+        Default 
+    </a>
+        
+    <br />
+        
+</div>
+
+<!-------------------------------------- Table for Reading Properties ------------------------------------->
+
+<table>
+    <tr>
+        <td width='75%' id='article_content'>
+
+        <!-------------------------------------- Reading content ------------------------------------->
+
+            <div id='article_content_RWM_Viewer' class='article_content_RWM_Viewer_class'>
+                <br/>
+                
+            <!-------------------------------------- Overall Comment Section ------------------------------------->
+                
+                    <div id='overall_comment_RWM_Viewer_id' class='overall_comment_RWM_Viewer_class'>
+                        Overall questions or comments on this article
+                        <br/>
+
+                        <div id='leave_comment_RWM_Viewer_id' class='leave_comment_RWM_Viewer_class'>
+                            <br/>
+                            click here to leave an overall comment about this article
+                        </div>
+                        <br/>
+                        <br/>
+                    </div>
+                    
+                    <br/>
+                    <div id='RWM_headline'>
+                    </div>
+                    
+                    <br/>
+                    <div id='RWM_description'>
+                    </div>
+                    
+                    <br/>
+                    <img id='RWM_news_picture' />
+                    
+                    <br/>
+                    <div id='RWM_news_source'>
+                    </div>
+
+                    <br/>
+                    <div id='RWM_author'>
+                    </div>
+                    
+                    <br/>
+                    <div id='RWM_para'>
+                    </div>
+            
+            </div>
+        </td>
+
+        <td id='comment_content' height='100'>
+            <div id='article_comments_id'>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+
+<script>
+
+// Set up an Event Listener to get the contents of the article
+
+var ArticleContent; 
+
+var keep_listening = true;
+
+function listener(event)
+{
+    if(keep_listening)
+    {
+        ArticleContent = event.data
+        add_article_content()
+        keep_listening = false
+    }
+}
+
+window.addEventListener("message", listener, false)
+
+
+// Add Article content to your document
+function add_article_content()
+{
+    $('#RWM_headline').append(ArticleContent.headline)
+    $('#RWM_description').append(ArticleContent.description)    
+    $('#RWM_news_source').append(ArticleContent.site_name)
+    $("#RWM_news_picture").attr("src", ArticleContent.image_url)
+    $('#RWM_author').append(ArticleContent.author)
+    
+    add_paras()
+    send_content_to_server()
+    
+}
+
+function add_paras()
+{
+    var wordcount = 0;
+    var html_para = ''
+    var para_words = "";
+    
+    for (var i in ArticleContent.paras) 
+    {
+        html_para += "<p>"
+
+        var individual_para = ArticleContent.paras[i]
+        
+        para_words = individual_para.split(" ")
+      
+        // Go through each word in the paragraph, creating a span and id for each word
+        
+        for (var j in para_words) 
+        {
+            html_para += "<span id='p" + wordcount + "'>"
+            html_para += para_words[j] + " "
+            html_para += "</span>" 
+            wordcount++;
+        }
+        
+        html_para += '</p>';    
+    }
+
+    $('#RWM_para').append(html_para)
+
+    enable_commenting()    
+}
+
+/********************************************* Send Article Content to the Server ***************/
+
+function send_content_to_server()
+{
+//ArticleContent
+    json_response = JSON.stringify(ArticleContent);
+    alert(json_response)
+    $.post("http://127.0.0.1:8000/article_handler/", json_response);
+    
+}
+    
+
+/********************************************* Enable Commenting ***************/
+function enable_commenting()
+{
+
+    aComment_Array = []
+
+    //******* Comment Object ********
+    // Defines the comment object
+    function Document_Comments(id_input, username_input, comment_input)
+    { 
+        // Span Id of where comment will be stored
+        this.id = id_input;
+        this.username = username_input;
+        this.comment = comment_input;
+        this.color = '#94ffb8';
+    }   
+
+/********************************************* Input Comments ***************/
+
+    var ids = new Array();
+
+    // get user selection
+    var getAllBetween = function (firstEl,lastEl) 
+    {
+        var firstElement = $(firstEl); // First Element
+        var lastElement = $(lastEl); // Last Element
+        var collection = new Array(); // Collection of Elements
+        collection.push(firstElement.attr('id')); // Add First Element to Collection
+        $(firstEl).nextAll().each(function()
+        { // Traverse all siblings
+            var siblingID  = $(this).attr('id'); // Get Sibling ID
+            if (siblingID != $(lastElement).attr('id')) 
+            { // If Sib is not LastElement
+                collection.push($(this).attr('id')); // Add Sibling to Collection
+            } 
+            else 
+            { // Else, if Sib is LastElement
+                collection.push(lastElement.attr('id')); // Add Last Element to Collection
+                return false; // Break Loop
+            }
+        });         
+        return collection; // Return Collection
+    }
+    
+    $('span').mouseup(function(event)
+    {       
+        ids = new Array();
+        if (window.getSelection) 
+        { // non-IE
+            userSelection = window.getSelection();
+            rangeObject = userSelection.getRangeAt(0);
+            if (rangeObject.startContainer == rangeObject.endContainer) 
+            {   
+                ids = rangeObject.startContainer.parentNode.id
+            } 
+            else 
+            {   
+                ids = getAllBetween(
+                    rangeObject.startContainer.parentNode,
+                    rangeObject.endContainer.parentNode)
+            
+            }
+        } 
+        else if (document.selection) 
+        { // IE lesser
+            userSelection = document.selection.createRange();
+            
+                
+            if (userSelection.htmlText.toLowerCase().indexOf('span') >= 0) 
+            {
+                $(userSelection.htmlText).filter('span').each(function(index, span) 
+                {
+                    ids.push(span.id);
+                });
+            } else 
+            {
+                ids = userSelection.parentElement().id;
+            }
+        }
+        CreateComment()
+    });
+
+
+    // get user selection
+
+    function CreateComment()
+    {
+        var divCommentLoc  = $('#article_comments_id').offset();
+        var lastTag = ids[ids.length - 1]
+        lastid = '#' + lastTag
+        
+        var commentLoc = $(lastid).offset();
+        var commentID = lastTag;
+        
+        var user_comment = "";
+            user_comment += "<div class='rwm_comment_class' "
+            user_comment += "style='top:"
+            user_comment += (commentLoc.top - divCommentLoc.top)
+            user_comment +="px'>"
+            user_comment +='<strong>' + "varun" + ': </strong>'
+            user_comment +='<input type="text" id="user_comment_RWM_Viewer"/>'
+            user_comment +='</div>'
+            
+
+        $('#article_comments_id').prepend(user_comment)
+
+        $('#article_comments_id').prepend(user_comment)
+        
+        for(x in ids)
+        {
+            $(('#' + ids[x])).css('background', 'yellow')
+        }
+        
+        $('input') // retrieve all inputs
+                .keydown(function(e) { // bind keydown on all inputs
+                if (e.keyCode == 13)
+                {   
+                    // enter was pressed
+                    $(this).closest('input').submit(); // submit the current form
+                }
+             });
+            
+        $('input').submit(
+        function()
+            {
+            aComment_Array.push(
+                new Document_Comments(
+                        '#'+commentID, 
+                        'varun',     
+                        $('#user_comment_RWM_Viewer').val()
+                                    )
+                                );
+            // send comment to server
+            
+            CommentPresentation()
+                                        
+            }
+        )    
+    }
+
+    /************************* Presenting Comments ******************/
+    function CommentPresentation()
+    {
+        //clear all previous comments
+        $('#article_comments_id').html('');
+                    
+        var divCommentLoc = $('#article_comments_id').offset()
+                    
+        for (var i=0; i < aComment_Array.length; i++)
+        {
+            //Individual Comment Offset
+            var commentLoc = $(aComment_Array[i].id).offset()
+                        
+            $(aComment_Array[i].id).css('background', 'yellow');
+        
+            var user_comment = "";
+            user_comment += "<div class='rwm_comment_class' "
+            user_comment += "style='top:"
+            user_comment += (commentLoc.top - divCommentLoc.top)
+            user_comment += "px'>"
+            user_comment += '<strong>'
+            user_comment += aComment_Array[i].username + ': <br/>'
+            user_comment += '</strong>'
+            user_comment += aComment_Array[i].comment
+            user_comment +='</div>'
+
+            $('#article_comments_id').prepend(user_comment)
+        }
+    }
+}
+    
+    
+    
+</script>
