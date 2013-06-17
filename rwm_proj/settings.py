@@ -72,10 +72,10 @@ STATIC_URL = '/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Local Host static files
-    #'/Users/varunbhartia/development_projects/rwm/rwm_proj/static/rwm_proj',
+    '/Users/varunbhartia/development_projects/rwm/rwm_proj/static/rwm_proj',
     
     # For deployment
-    '/static/rwm_proj',
+    #'/static/rwm_proj',
 
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
@@ -87,7 +87,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
