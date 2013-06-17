@@ -111,7 +111,11 @@ ROOT_URLCONF = 'rwm_proj.urls'
 WSGI_APPLICATION = 'rwm_proj.wsgi.application'
 
 TEMPLATE_DIRS = (
-    '/Users/varunbhartia/development_projects/rwm/rwm_proj/templates',
+    #for local host 
+    #'/Users/varunbhartia/development_projects/rwm/rwm_proj/templates',
+    
+    # for deploy
+    'templates'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
