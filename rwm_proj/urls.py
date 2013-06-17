@@ -8,8 +8,6 @@ admin.autodiscover()
 
 # ... the rest of your URLconf goes here ...
 
-urlpatterns += staticfiles_urlpatterns()
-
 urlpatterns = patterns('',
 
     #****************************************************
@@ -91,5 +89,8 @@ urlpatterns = patterns('',
     
     # - Render the admin view
   url(r'^admin/', include(admin.site.urls)),
+
+  urlpatterns += staticfiles_urlpatterns()
+
     
 )
