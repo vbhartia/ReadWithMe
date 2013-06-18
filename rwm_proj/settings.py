@@ -13,7 +13,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         #'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '/Users/varunbhartia/development_projects/rwm/RWM_DB.db',                      # Or path to database file if using sqlite3.
+        #'NAME': '/Users/varunbhartia/development_projects/rwm/RWM_DB.db',
+        'NAME': './RWM_DB.db',                      # Or path to database file if using sqlite3.
         #'NAME': '',
         # The following settings are not used with sqlite3:
         'USER': '',

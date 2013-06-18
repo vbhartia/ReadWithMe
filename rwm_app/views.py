@@ -238,7 +238,6 @@ def iframe_bookmarklet(request):
 # @csrf_protect
 def article_handler(request):
     
-    
     #print(request.raw_post_data)
 
     if request.method == 'POST':
