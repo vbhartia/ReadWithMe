@@ -45,105 +45,99 @@
 
 <!-- Reading Content -->
 
-<!--Reading Controls -->
-<div id='article_reading_controls_RWM_Viwer_id' class='article_reading_controls_RWM_Viwer_class'>
-    <span class='page_text_RWM_Viewer'>Change Article Presentation</span>
-        
-    <br />
-    <br />
-    <a id='background_text_setting_id'      class='article_reading_controls_buttons_RWM_Viewer_class'>
-        Black Background, White Text
-    </a>
+<style>
+    #reading_contents #table_container
+    {
+        margin: auto;
+        border-style:solid;
+    }
+    .user_headline_input_class .user_comment_input_class
+    {
+        background:yellow;
 
-    <a id='increase_text_size_id'           class='article_reading_controls_buttons_RWM_Viewer_class'>
-        Increase Text Size 
-    </a>
-        
-    <a id='decrease_text_size_id'           class='article_reading_controls_buttons_RWM_Viewer_class'>
-        Decrease Text Size 
-    </a>
+    }
+</style>
 
-    <a id='increase_line_spacing_id'        class='article_reading_controls_buttons_RWM_Viewer_class'>
-        Increase Line Spacing 
-    </a>
-    
-    <a id='decrease_line_spacing_id'        class='article_reading_controls_buttons_RWM_Viewer_class'>
-        Decrease Line Spacing 
-    </a>
-    
-    <a id='increase_word_spacing_id'        class='article_reading_controls_buttons_RWM_Viewer_class'>
-        Increase Word Spacing 
-    </a>
-    
-    <a id='decrease_word_spacing_id'        class='article_reading_controls_buttons_RWM_Viewer_class'>
-        Decrease Word Spacing 
-    </a>
+<div id="reading_contents">
 
-    <a id='default_settings_id'             class='article_reading_controls_buttons_RWM_Viewer_class'>
-        Default 
-    </a>
-        
-    <br />
-        
-</div>
 
-<!--Table for Reading Properties -->
+    <!--Table for Reading Properties -->
 
-<table>
-    <tr>
-        <td width='75%' id='article_content'>
-
-        <!-- Reading content -->
-
-            <div id='article_content_RWM_Viewer' class='article_content_RWM_Viewer_class'>
-                <br/>
-                
-            <!--Overall Comment Section -->
-                
-                    <div id='overall_comment_RWM_Viewer_id' class='overall_comment_RWM_Viewer_class'>
-                        Overall questions or comments on this article
+    <table id='table_container' width='1100px'>
+        <tr>
+            <td width='75%' id='overall_comments'>
+                <!--Overall Comment Section -->
+                    
+                    <div id='headline_comment_id' class='headline_comment_class'>
                         <br/>
+                        <h2>
+                            Overall questions or comments on this article
+                        </h2>
+                        <br/>
+                    </div>
 
-                        <div id='leave_comment_RWM_Viewer_id' class='leave_comment_RWM_Viewer_class'>
-                            <br/>
+                    <div id='overall_comment_id' class='user_overall_comment_class'>
+                        <br/>
+                        <h4>
                             click here to leave an overall comment about this article
+                        </h4>
+
+                    </div>
+                
+                    <br/>
+                    <br/>
+
+            </td>
+
+            <td id='article_sharing'>
+                Sharing content here
+            </td>
+        </tr>
+        
+        <tr>
+
+            <td width='75%' id='article_content'>
+
+            <!-- Reading content -->
+
+                <div id='article_content_RWM_Viewer' class='article_content_RWM_Viewer_class'>
+                    <br/>
+                    
+                
+                        
+                        <br/>
+                        <div id='RWM_headline'>
                         </div>
+                        
                         <br/>
+                        <div id='RWM_description'>
+                        </div>
+                        
                         <br/>
-                    </div>
-                    
-                    <br/>
-                    <div id='RWM_headline'>
-                    </div>
-                    
-                    <br/>
-                    <div id='RWM_description'>
-                    </div>
-                    
-                    <br/>
-                    <img id='RWM_news_picture' />
-                    
-                    <br/>
-                    <div id='RWM_news_source'>
-                    </div>
+                        <img id='RWM_news_picture' />
+                        
+                        <br/>
+                        <div id='RWM_news_source'>
+                        </div>
 
-                    <br/>
-                    <div id='RWM_author'>
-                    </div>
-                    
-                    <br/>
-                    <div id='RWM_para'>
-                    </div>
-            
-            </div>
-        </td>
+                        <br/>
+                        <div id='RWM_author'>
+                        </div>
+                        
+                        <br/>
+                        <div id='RWM_para'>
+                        </div>
+                
+                </div>
+            </td>
 
-        <td id='comment_content' height='100'>
-            <div id='article_comments_id'>
-            </div>
-        </td>
-    </tr>
-</table>
+            <td id='comment_content' height='100'>
+                <div id='article_comments_id'>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
 
 
 
@@ -393,7 +387,115 @@ function enable_commenting()
         }
     }
 
-    
+
+   $('#headline_comment_id').mouseup(function(event)
+    {
+
+       var user_comment = "";
+        user_comment += "<div class='user_headline_input_class' "
+        user_comment +=">"
+
+        user_comment += "<br/>"
+
+        user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
+        user_comment +='<input type="text" id="headline_comment_input_id"/>'
+        user_comment +='</div>'
+            
+        $('#headline_comment_id').replaceWith(user_comment)
+
+        $('input') // retrieve all inputs
+        .keydown(function(e) 
+        { // bind keydown on all inputs
+            if (e.keyCode == 13)
+            {   
+                // enter was pressed
+                alert('Submitting Headline')
+                $(this).closest('input').submit(); // submit the current form
+            }
+        });
+
+        $('input').submit(
+        function()
+            {
+                    
+            commentContent.headline = {
+                "comment": $('#headline_comment_input_id').val()
+                }
+
+            alert(commentContent.headline.comment)
+            SendComments()
+
+            }
+        )    
+
+
+        
+    });
+
+
+   $('#overall_comment_id').mouseup(function(event)
+    {
+
+        var user_comment = "";
+        user_comment += "<div class='user_comment_input_class' "
+        user_comment +=">"
+
+        user_comment += "<br/>"
+
+        user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
+        user_comment +='<input type="text" id="overall_comment_input_id"/>'
+        user_comment +='</div>'
+            
+        $('#overall_comment_id').replaceWith(user_comment)
+
+        $('input') // retrieve all inputs
+        .keydown(function(e) 
+        { // bind keydown on all inputs
+            if (e.keyCode == 13)
+            {   
+                // enter was pressed
+                alert('Submitting Overall comment')
+                $(this).closest('input').submit(); // submit the current form
+            }
+        });
+
+
+        $('input').submit(
+        function()
+            {
+                    
+            commentContent.overall = {
+                "comment": $('#overall_comment_input_id').val()
+                }
+
+            alert(commentContent.overall.comment)
+            SendComments()
+
+            }
+        ) 
+
+
+        
+    });
+
+
+    $('#headline_comment_input_id').submit(
+        function()
+            {
+                alert('here')
+            }
+        )
+
+
+
+
+
+
+
+
+
+
+
     function SendComments()
     {
         commentContent.articleid = ArticleContent.server_id
@@ -404,6 +506,23 @@ function enable_commenting()
 
     }
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
     
     
