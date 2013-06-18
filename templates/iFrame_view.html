@@ -164,7 +164,6 @@ function listener(event)
         ArticleContent = event.data
         add_article_content()
         keep_listening = false
-        alert('listening')
     }   
 }
 
@@ -224,8 +223,15 @@ function send_content_to_server()
 {
 //ArticleContent
     json_response = JSON.stringify(ArticleContent);
-    alert(json_response)
-    $.post("http://127.0.0.1:8000/article_handler/", json_response);
+    $.post("http://127.0.0.1:8000/article_handler/", 
+            json_response,
+            function(data) 
+            {
+                alert(data.article_id)
+                ArticleContent.server_id = data.article_id
+                ArticleContent.creator_username = data.username
+            }
+        );
     
 }
     
@@ -316,7 +322,7 @@ function enable_commenting()
             user_comment += "style='top:"
             user_comment += (commentLoc.top - divCommentLoc.top)
             user_comment +="px'>"
-            user_comment +='<strong>' + "varun" + ': </strong>'
+            user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
             user_comment +='<input type="text" id="user_comment_RWM_Viewer"/>'
             user_comment +='</div>'
             
@@ -341,17 +347,19 @@ function enable_commenting()
         $('input').submit(
         function()
             {
+                    
             commentContent.inline.push(
                 {"ids" : ids, 
-                "username": "varun", 
+                "username": ArticleContent.creator_username, 
                 "comment": $('#user_comment_RWM_Viewer').val()
                 }
                 
                                     );
+
             // send comment to server
             
             CommentPresentation()
-            //SendComments()
+            SendComments()
                                         
             }
         )    
@@ -368,11 +376,7 @@ function enable_commenting()
         for (var i=0; i < commentContent.inline.length; i++)
         {
             //Individual Comment Offset
-            var commentLoc = $(commentContent.inline[i].ids[commentContent.inline[i].ids.length-1]).offset()
-              
-            alert(commentLoc.top)
-
-            //$(aComment_Array[i].id).css('background', 'yellow');
+            var commentLoc = $('#' + commentContent.inline[i].ids[commentContent.inline[i].ids.length-1]).offset()
         
             var user_comment = "";
             user_comment += "<div class='rwm_comment_class' "
@@ -380,30 +384,26 @@ function enable_commenting()
             user_comment += (commentLoc.top - divCommentLoc.top)
             user_comment += "px'>"
             user_comment += '<strong>'
-            user_comment += aComment_Array[i].username + ': <br/>'
+            user_comment += commentContent.inline[i].username + ': <br/>'
             user_comment += '</strong>'
-            user_comment += aComment_Array[i].comment
+            user_comment += commentContent.inline[i].comment
             user_comment +='</div>'
 
             $('#article_comments_id').prepend(user_comment)
         }
     }
 
-    /*
+    
     function SendComments()
     {
-        aComment_Array.articleid = 1
-        json_response = JSON.stringify(aComment_Array);
+        commentContent.articleid = ArticleContent.server_id
+        json_response = JSON.stringify(commentContent);
             alert(json_response)
         
         $.post("http://127.0.0.1:8000/comment_handler/", json_response);
 
     }
-    */
-
-
-
-
+    
 }
     
     

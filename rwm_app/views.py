@@ -258,7 +258,16 @@ def article_handler(request):
     
         new_article.save()
         print new_article.id
-        return HttpResponse('ok')
+        print current_UserProfile.user.username
+
+        article_info_response = {
+         'article_id': new_article.id,
+         'username': current_UserProfile.user.username,
+        }
+
+        data = simplejson.dumps(article_info_response)
+
+        return HttpResponse(data, mimetype='application/json')
 
     if request.method == 'GET':
       print 'here'
@@ -298,13 +307,14 @@ def comment_handler(request):
 
   if request.method == 'POST':
       json_data = simplejson.loads(request.raw_post_data)
-      current_article = reader_article_store.objects.get(id = 1)
+      current_article = reader_article_store.objects.get(id = json_data['articleid'])
       
       current_article.comments_JSON = request.raw_post_data
   
       current_article.save()
+
       print current_article.comments_JSON
-      print json_data
+      print json_data['articleid']
       return HttpResponse('ok')
 
 

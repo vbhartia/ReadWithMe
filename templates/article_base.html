@@ -240,22 +240,55 @@
                                     alert(data.shared_by)
                                     */
                                     alert(data)
-                                    commentContent = data
-                                    add_article_comments()
+                                    commentContent = jQuery.parseJSON(data)
+                                    CommentPresentation()
                                 }
                             )
 
 
     }
 
-    function add_article_comments()
+    function CommentPresentation()
     {
-        alert('called')
+        //clear all previous comments
+        $('#article_comments_id').html('');
+                    
+        var divCommentLoc = $('#article_comments_id').offset()
+        
+        alert(commentContent.inline.length)
+
+        for (var i=0; i < commentContent.inline.length; i++)
+        {
+            //Individual Comment Offset
+            var commentLoc = $('#' + commentContent.inline[i].ids[commentContent.inline[i].ids.length-1]).offset()
+        
+            var user_comment = "";
+            user_comment += "<div class='rwm_comment_class' "
+            user_comment += "style='top:"
+            user_comment += (commentLoc.top - divCommentLoc.top)
+            user_comment += "px'>"
+            user_comment += '<strong>'
+            user_comment += commentContent.inline[i].username + ': <br/>'
+            user_comment += '</strong>'
+            user_comment += commentContent.inline[i].comment
+            user_comment +='</div>'
+
+            $('#article_comments_id').prepend(user_comment)
+
+
+        // Highlight Words
+        for(x in commentContent.inline[i].ids)
+        {
+            $(('#' + commentContent.inline[i].ids[x])).css('background', 'yellow')
+        }
+        
+
+        }
+
+
+
+
 
     }
 
-
-
-
-   
 </script>
