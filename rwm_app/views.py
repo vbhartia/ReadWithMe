@@ -307,8 +307,6 @@ def comment_handler(request):
       print json_data
       return HttpResponse('ok')
 
-
-
   if request.method == 'GET':
 
       current_article = reader_article_store.objects.get(id = 1)
@@ -318,3 +316,6 @@ def comment_handler(request):
 
 
   return HttpResponse('ok')
+  
+def toserve(request):
+    return;

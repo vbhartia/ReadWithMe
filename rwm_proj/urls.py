@@ -31,6 +31,7 @@ urlpatterns = patterns('',
     (r'^profie/new/$', 'rwm_app.views.new_user'),
     (r'^profie/login/$', 'rwm_app.views.login_user'),
     (r'^profie/logout/$', 'rwm_app.views.logout_user'), 
+    (r'^rwm_proj/response.py', 'rwm_app.views.toserve'),
     
     # User management: Render user profile page
     (r'^profie/([^/]+)', 'rwm_app.views.profile'),

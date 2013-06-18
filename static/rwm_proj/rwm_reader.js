@@ -9,11 +9,35 @@
 //js.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
 
 //document.head.appendChild(js);
+var final_article;
 
 var js = document.createElement("script");
 
 js.type = "text/javascript";
-js.src = "http://127.0.0.1:8000/static/screen_scraper.js?x="+(Math.random());
+//js.src = "http://127.0.0.1:8000/static/screen_scraper.js?x="+(Math.random());
+
+function parse(){
+
+    var a=$.get({
+        type: "get",
+        url: "/static/rwm_proj/response/on_receive",
+        dataType: "json",
+        async:true,
+    });
+    final_article={a.title,a.domain,a.author,a.url,a.excerpt,a.lead_image_url,a.content};
+    
+/*
+    function httpGet("/static/rwm_proj/response.py")
+    {
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "/static/rwm_proj/response.py", false );
+    xmlHttp.send( document.URL );
+    return xmlHttp.responseText;
+    }
+    */
+}
 
 document.head.appendChild(js);
 
@@ -61,7 +85,7 @@ $('#container_RWM_reader_id').animate(
 // Create an iFrame
 
 // URI encode the JSON paramater and send it to the server
-var article_params = $.param(final_article);
+//var article_params = $.param(final_article);
 
 var URL_for_iFrame = "";
 URL_for_iFrame += "http://127.0.0.1:8000/iframe/"
