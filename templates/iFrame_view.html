@@ -6,6 +6,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 {% load staticfiles %}
 
+{% csrf_token %}
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
@@ -41,9 +43,9 @@
 
 </div>
 
-<!-------------------------------------- Reading Content ------------------------------------->
+<!-- Reading Content -->
 
-<!-------------------------------------- Reading Controls ------------------------------------->
+<!--Reading Controls -->
 <div id='article_reading_controls_RWM_Viwer_id' class='article_reading_controls_RWM_Viwer_class'>
     <span class='page_text_RWM_Viewer'>Change Article Presentation</span>
         
@@ -85,18 +87,18 @@
         
 </div>
 
-<!-------------------------------------- Table for Reading Properties ------------------------------------->
+<!--Table for Reading Properties -->
 
 <table>
     <tr>
         <td width='75%' id='article_content'>
 
-        <!-------------------------------------- Reading content ------------------------------------->
+        <!-- Reading content -->
 
             <div id='article_content_RWM_Viewer' class='article_content_RWM_Viewer_class'>
                 <br/>
                 
-            <!-------------------------------------- Overall Comment Section ------------------------------------->
+            <!--Overall Comment Section -->
                 
                     <div id='overall_comment_RWM_Viewer_id' class='overall_comment_RWM_Viewer_class'>
                         Overall questions or comments on this article
@@ -149,7 +151,9 @@
 
 // Set up an Event Listener to get the contents of the article
 
-var ArticleContent; 
+var ArticleContent = new Object(); 
+var commentContent = new Object();
+commentContent.inline = new Array(); 
 
 var keep_listening = true;
 
@@ -160,7 +164,8 @@ function listener(event)
         ArticleContent = event.data
         add_article_content()
         keep_listening = false
-    }
+        alert('listening')
+    }   
 }
 
 window.addEventListener("message", listener, false)
@@ -209,6 +214,7 @@ function add_paras()
 
     $('#RWM_para').append(html_para)
 
+    //inline commenting
     enable_commenting()    
 }
 
@@ -228,49 +234,16 @@ function send_content_to_server()
 function enable_commenting()
 {
 
-    aComment_Array = []
-
-    //******* Comment Object ********
-    // Defines the comment object
-    function Document_Comments(id_input, username_input, comment_input)
-    { 
-        // Span Id of where comment will be stored
-        this.id = id_input;
-        this.username = username_input;
-        this.comment = comment_input;
-        this.color = '#94ffb8';
-    }   
-
 /********************************************* Input Comments ***************/
 
+    // get user selection
+    
     var ids = new Array();
 
-    // get user selection
-    var getAllBetween = function (firstEl,lastEl) 
-    {
-        var firstElement = $(firstEl); // First Element
-        var lastElement = $(lastEl); // Last Element
-        var collection = new Array(); // Collection of Elements
-        collection.push(firstElement.attr('id')); // Add First Element to Collection
-        $(firstEl).nextAll().each(function()
-        { // Traverse all siblings
-            var siblingID  = $(this).attr('id'); // Get Sibling ID
-            if (siblingID != $(lastElement).attr('id')) 
-            { // If Sib is not LastElement
-                collection.push($(this).attr('id')); // Add Sibling to Collection
-            } 
-            else 
-            { // Else, if Sib is LastElement
-                collection.push(lastElement.attr('id')); // Add Last Element to Collection
-                return false; // Break Loop
-            }
-        });         
-        return collection; // Return Collection
-    }
-    
     $('span').mouseup(function(event)
     {       
         ids = new Array();
+
         if (window.getSelection) 
         { // non-IE
             userSelection = window.getSelection();
@@ -306,8 +279,28 @@ function enable_commenting()
         CreateComment()
     });
 
+    var getAllBetween = function (firstEl,lastEl) 
+    {
+        var firstElement = $(firstEl); // First Element
+        var lastElement = $(lastEl); // Last Element
+        var collection = new Array(); // Collection of Elements
+        collection.push(firstElement.attr('id')); // Add First Element to Collection
+        $(firstEl).nextAll().each(function()
+        { // Traverse all siblings
+            var siblingID  = $(this).attr('id'); // Get Sibling ID
+            if (siblingID != $(lastElement).attr('id')) 
+            { // If Sib is not LastElement
+                collection.push($(this).attr('id')); // Add Sibling to Collection
+            } 
+            else 
+            { // Else, if Sib is LastElement
+                collection.push(lastElement.attr('id')); // Add Last Element to Collection
+                return false; // Break Loop
+            }
+        });         
+        return collection; // Return Collection
+    }
 
-    // get user selection
 
     function CreateComment()
     {
@@ -329,9 +322,8 @@ function enable_commenting()
             
 
         $('#article_comments_id').prepend(user_comment)
-
-        $('#article_comments_id').prepend(user_comment)
         
+        // Highlight Words
         for(x in ids)
         {
             $(('#' + ids[x])).css('background', 'yellow')
@@ -349,16 +341,17 @@ function enable_commenting()
         $('input').submit(
         function()
             {
-            aComment_Array.push(
-                new Document_Comments(
-                        '#'+commentID, 
-                        'varun',     
-                        $('#user_comment_RWM_Viewer').val()
-                                    )
-                                );
+            commentContent.inline.push(
+                {"ids" : ids, 
+                "username": "varun", 
+                "comment": $('#user_comment_RWM_Viewer').val()
+                }
+                
+                                    );
             // send comment to server
             
             CommentPresentation()
+            SendComments()
                                         
             }
         )    
@@ -372,12 +365,14 @@ function enable_commenting()
                     
         var divCommentLoc = $('#article_comments_id').offset()
                     
-        for (var i=0; i < aComment_Array.length; i++)
+        for (var i=0; i < commentContent.inline.length; i++)
         {
             //Individual Comment Offset
-            var commentLoc = $(aComment_Array[i].id).offset()
-                        
-            $(aComment_Array[i].id).css('background', 'yellow');
+            var commentLoc = $(commentContent.inline[i].ids[commentContent.inline[i].ids.length-1]).offset()
+              
+            alert(commentLoc.top)
+
+            //$(aComment_Array[i].id).css('background', 'yellow');
         
             var user_comment = "";
             user_comment += "<div class='rwm_comment_class' "
@@ -393,6 +388,20 @@ function enable_commenting()
             $('#article_comments_id').prepend(user_comment)
         }
     }
+
+    function SendComments()
+    {
+        aComment_Array.articleid = 1
+        json_response = JSON.stringify(aComment_Array);
+            alert(json_response)
+        
+        $.post("http://127.0.0.1:8000/comment_handler/", json_response);
+
+    }
+
+
+
+
 }
     
     

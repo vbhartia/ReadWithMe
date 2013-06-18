@@ -7,6 +7,49 @@
 
 <br/>
 
+<body>
+
+    <div id="login">
+    <br/>
+    <br/>
+    <form action="/login/" method="post">
+                            {% if next %}
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ next }}" />
+                            {% endif %}
+                            <center>
+                                <table>
+                                    <tr>
+                                        <th>
+                                            username:
+                                        </th>
+                                        <td>
+                                            <input type="text" name="username" value="{{ username}}" />
+                                        </td>
+                                        <th>
+                                            password:
+                                        </th>
+                                        <td>
+                                            <input type="password" name="password" value="" />
+                                        </td>
+                                        <td>
+                                            <input type="submit" value="Log In" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                                
+                        </form>
+
+    <br/>
+    </div>
+
+<div id="new_user" style="background-color:#0000FF">
+    <br/>
+    <br/>
+    <br/>
+    </div>
+
 <div id="homepage_container_id" class="homepage_container_class">
     
     <div id="homepage_logo_id" class="homepage_logo_class">
@@ -88,10 +131,24 @@
     </div>    
 </div>
 
+
+
+
+</body>
+
 <script>
+    
+
+
+        
+
+
+
     // Add the Bookmarklet
 
-    var bookmarklet_javascript = ""
+    $(function() {
+
+            var bookmarklet_javascript = ""
     bookmarklet_javascript += "javascript:(function(){"
 
     // Ensure JQuery is available
@@ -108,9 +165,6 @@
     bookmarklet_javascript += "})();"
 
     $('#bookmarkme').attr("href", bookmarklet_javascript)
-
-
-    $(function() {
         $('#bookmarkme').click(function() {
             if (window.sidebar && window.sidebar.addPanel) { // Mozilla Firefox Bookmark
                 window.sidebar.addPanel(bookmarklet_javascript);

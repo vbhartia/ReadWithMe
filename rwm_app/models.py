@@ -12,9 +12,12 @@ class UserProfile(models.Model):
                     
 class reader_article_store(models.Model):
     headline = models.TextField()
+    author = models.TextField()
+    description = models.TextField()
+    image_url = models.URLField()
     article_JSON = models.TextField()
     comments_JSON = models.TextField()
-    shared_by = models.OneToOneField(UserProfile)
+    shared_by = models.ForeignKey(UserProfile)
     publication_date = models.DateField()
     shared_date = models.DateField()
     def __unicode__(self): 

@@ -3,17 +3,17 @@
 // Creates an iFrame to host the content and log the user in.
 
 
+//var js = document.createElement("script");
+
+//js.type = "text/javascript";
+//js.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
+
+//document.head.appendChild(js);
+
 var js = document.createElement("script");
 
 js.type = "text/javascript";
-js.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
-
-document.head.appendChild(js);
-
-var js = document.createElement("script");
-
-js.type = "text/javascript";
-js.src = "http://127.0.0.1:8000/static/screen_scraper.js";
+js.src = "http://127.0.0.1:8000/static/screen_scraper.js?x="+(Math.random());
 
 document.head.appendChild(js);
 

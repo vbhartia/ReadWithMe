@@ -1,0 +1,261 @@
+<!# article_base.html>
+<! Renders the view for all article>
+
+
+<head>
+<title>To Do Replace</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+</head>
+<br />
+
+<!-- Table for Reading Properties -->
+
+<body>
+    <style>
+        #content_container #table_container
+        {
+            margin: auto;
+            border-style:solid;
+
+        }
+    </style>
+
+
+    <div id='content_container'>
+        <table width = '1100px' id = 'table_container'>
+            <tr>
+                <td width='700px'>
+
+                    <!-- Reading content -->
+
+                    <div>
+                
+                        <br/>
+                            
+                        <!-- Overall Comment Section -->
+                            
+                        <div id='overall_comment_RWM_Viewer_id' class="overall_comment_RWM_Viewer_class">
+                            Overall questions or comments on this article
+                            <br/>
+
+                            <div id='leave_comment_RWM_Viewer_id' class="leave_comment_RWM_Viewer_class">
+                                <br/>
+                                click here to leave an overall comment about this article
+                            </div>
+
+                            <br/>
+                            <br/>
+                        </div>
+                                
+                        <br/>
+                        
+                        <div class="article_content_Render_class">
+
+                            <div id='RWM_headline'>
+                            </div>
+                                    
+                            <br/>
+                                    
+                            <div id='RWM_description'>
+                            </div>
+                            
+                            <br/>
+                            
+                            <img id='RWM_news_picture' />
+                                    
+                            <br/>
+                            
+                            <div id='RWM_news_source'>
+                            </div>
+
+                            <br/>
+                            
+                            <div id='RWM_author'>
+                            </div>
+                            
+                            <br/>
+                            
+                            <div id='RWM_para'>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                </td>
+
+                <td id='comment_content' height='100'>
+                    <div id='article_comments_id'>
+                    </div>
+                </td>
+
+            </tr>
+
+        </table>
+    </div>
+
+</body>
+
+<script>
+    // Get Article URL
+    // Make Ajax requests to get article contents
+    // Render the content in the approperiate locations
+
+
+    // Setup Fake Content
+
+    var articleContent = new Object();
+    var commentContent = new Object();
+    /*ArticleContent.headline = "I like lots of rice"
+    ArticleContent.description = "I like asian rice"
+    ArticleContent.site_name = "CNBC.com"
+    ArticleContent.image_url = "www.google.com"
+    ArticleContent.author = "Varun Bharita"
+
+    var paras =[];
+
+    paras[0] = "Whats up dog"
+    paras[1] = "No way Varun Bhartia"
+    paras[2] = "Read With Me will be amazing"
+
+    ArticleContent.paras = paras; 
+    */
+    
+
+    // Add Contents to the document
+
+    get_Article()/**/
+    getComments()
+
+    function get_Article()
+    {
+        var articleInfo = new Object()
+        articleInfo.userName = getUsername()
+        articleInfo.articleId = getArticleID()
+
+        $.get("/article_handler/",
+                      articleInfo)
+                      .done(function(data) 
+                                {
+                                    /*
+                                    alert(data.headline)
+                                    alert(data.author)
+                                    alert(data.description)
+                                    alert(data.image_url)
+                                    alert(data.shared_by)
+                                    */
+
+                                    articleContent = data
+                                    add_article_content()
+                                }
+                            )
+
+    }
+
+    function add_article_content()
+    {
+        $('#RWM_headline').append(articleContent.headline)
+        $('#RWM_description').append(articleContent.description)    
+        $('#RWM_news_source').append(articleContent.site_name)
+        //$("#RWM_news_picture").attr("src", ArticleContent.image_url)
+        $('#RWM_author').append(articleContent.author)
+        
+        add_paras()
+        
+    }
+
+    function add_paras()
+    {
+        var wordcount = 0; 
+        var html_para = ''
+        var para_words = "";
+        
+        var articleJSON = jQuery.parseJSON(articleContent.article_JSON)
+
+        var paras = articleJSON.paras
+
+        for (var i in paras) 
+        {
+            html_para += "<p>"
+
+            var individual_para = paras[i]
+            
+            para_words = individual_para.split(" ")
+          
+            // Go through each word in the paragraph, creating a span and id for each word
+            
+            for (var j in para_words) 
+            {
+                html_para += "<span id='p" + wordcount + "'>"
+                html_para += para_words[j] + " "
+                html_para += "</span>" 
+                wordcount++;
+            }
+            
+            html_para += '</p>';    
+        }
+
+        $('#RWM_para').append(html_para)
+
+    }
+
+
+
+    function getUsername()
+    {
+        var fullpath = window.location.pathname
+        var ArticleID = fullpath.substring(fullpath.indexOf('article')+8)
+        end_index = ArticleID.indexOf('/')
+        UserName_article_id = ArticleID.substring(end_index + 1)
+        end_username = UserName_article_id.indexOf('/')
+
+        userName = UserName_article_id.substring(0, end_username)
+
+        return userName
+    }
+
+    function getArticleID()
+    {
+        var fullpath = window.location.pathname
+        first_half = fullpath.substring(fullpath.indexOf('article')+8)
+        end_index = first_half.indexOf('/')
+        article_id = first_half.substring(0, end_index)
+        alert(article_id)
+        return article_id
+    }
+
+
+
+    function getComments()
+    {
+        alert('getting comments ')
+        $.get("/comment_handler/",
+                      {"article_id":"1"})
+                      .done(function(data) 
+                                {
+                                    /*
+                                    alert(data.headline)
+                                    alert(data.author)
+                                    alert(data.description)
+                                    alert(data.image_url)
+                                    alert(data.shared_by)
+                                    */
+                                    alert(data)
+                                    commentContent = data
+                                    add_article_comments()
+                                }
+                            )
+
+
+    }
+
+    function add_article_comments()
+    {
+        alert('called')
+
+    }
+
+
+
+
+   
+</script>

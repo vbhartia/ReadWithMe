@@ -14,6 +14,14 @@
         {% include 'my_articles.html' %}
     {% endif %}
 
+
+    <! Render shared version of the article>   
+    
+    {% if show = 'article_base' %}
+        {% include 'article_base.html' %}
+    {% endif %}
+
+
 </body>
 
 </html>
