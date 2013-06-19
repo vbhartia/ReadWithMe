@@ -18,29 +18,29 @@ js.type = "text/javascript";
 
 function parses(){
 
-    var a=$.get("/static/rwm_proj/response/on_receive",{URL:document.URL});
-    for(var key in a)
-    {
-        if (key=="title"){final_article.headline=key;}
-        if (key="domain"){final_article.site_name=key;}
-        if (key="author"){final_article.author=key;}
-        if (key="url"){final_article.url=key;}
-        if (key="excerpt"){final_article.description=key;}
-        if (key="lead_image_url"){final_article.image_url=key;}
-        if (key="content"){final_article.paras=key;}
+    /*var a=$.get("/static/rwm_proj/response/on_receive",{URL:document.URL});
+    console.log(JSON.stringify(a));*/
+    
+    var request = new XMLHttpRequest();
+    request.open("GET","http://127.0.0.1:8000/response/");
+    
+    request.onreadystatechange = function() {
+        if(request.readyState == 4){
+            var a = request.responseText;
+            console.log(a);
+            final_article.headline=a.title;
+            final_article.site_name=null;
+            final_article.author=null;
+            final_article.url=null;
+            final_article.description=null;
+            final_article.image_url=null;
+            final_article.paras=null;
+        }
+    }
+    request.send({"URL":document.URL})
+    
             
-    }
-/*
-    function httpGet("/static/rwm_proj/response.py")
-    {
-    var xmlHttp = null;
 
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "/static/rwm_proj/response.py", false );
-    xmlHttp.send( document.URL );
-    return xmlHttp.responseText;
-    }
-    */
 }
 
 document.head.appendChild(js);

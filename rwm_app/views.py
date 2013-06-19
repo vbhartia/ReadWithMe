@@ -8,6 +8,7 @@ import re
 import json
 from django.utils import simplejson
 import time
+import requests
 
 from django.db import models
 from django.shortcuts import render
@@ -318,4 +319,5 @@ def comment_handler(request):
   return HttpResponse('ok')
   
 def toserve(request):
-    return;
+    r=requests.get("https://www.readability.com/api/content/v1/parser?url=" + request + "&token=a2e24e752483855b1c02638584935961c96c4368")
+    return HttpResponse(simplejson.dumps(r))
