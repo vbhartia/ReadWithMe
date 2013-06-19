@@ -28,12 +28,12 @@ urlpatterns = patterns('',
     #****************************************************
     
     # User actions: Post requests
-    (r'^profie/new/$', 'rwm_app.views.new_user'),
-    (r'^profie/login/$', 'rwm_app.views.login_user'),
-    (r'^profie/logout/$', 'rwm_app.views.logout_user'), 
+    (r'^profile/new/$', 'rwm_app.views.new_user'),
+    (r'^profile/login/$', 'rwm_app.views.login_user'),
+    (r'^profile/logout/$', 'rwm_app.views.logout_user'), 
     
     # User management: Render user profile page
-    (r'^profie/([^/]+)', 'rwm_app.views.profile'),
+    (r'^profile/([^/]+)', 'rwm_app.views.profile'),
 
     #****************************************************
     #

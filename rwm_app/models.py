@@ -13,6 +13,7 @@ class UserProfile(models.Model):
 class reader_article_store(models.Model):
     headline = models.TextField()
     author = models.TextField()
+    loc_url = models.TextField()
     description = models.TextField()
     image_url = models.URLField()
     article_JSON = models.TextField()
