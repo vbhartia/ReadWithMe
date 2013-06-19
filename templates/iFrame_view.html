@@ -12,9 +12,12 @@
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 <head>
+
     <link rel="stylesheet" href="{% static "RWM.css" %}" type="text/css" />
+
     <link rel="stylesheet" href="{% static "RWM_reader.css" %}" type="text/css" />
 </head>
+
 
 <div class="nav_link" id="nav">
     
@@ -217,11 +220,10 @@ function send_content_to_server()
 {
 //ArticleContent
     json_response = JSON.stringify(ArticleContent);
-    $.post("http://127.0.0.1:8000/article_handler/", 
+    $.post("/article_handler/", 
             json_response,
             function(data) 
             {
-                alert(data.article_id)
                 ArticleContent.server_id = data.article_id
                 ArticleContent.creator_username = data.username
             }
@@ -409,7 +411,6 @@ function enable_commenting()
             if (e.keyCode == 13)
             {   
                 // enter was pressed
-                alert('Submitting Headline')
                 $(this).closest('input').submit(); // submit the current form
             }
         });
@@ -422,7 +423,6 @@ function enable_commenting()
                 "comment": $('#headline_comment_input_id').val()
                 }
 
-            alert(commentContent.headline.comment)
             SendComments()
 
             }
@@ -454,7 +454,7 @@ function enable_commenting()
             if (e.keyCode == 13)
             {   
                 // enter was pressed
-                alert('Submitting Overall comment')
+                //alert('Submitting Overall comment')
                 $(this).closest('input').submit(); // submit the current form
             }
         });
@@ -468,7 +468,6 @@ function enable_commenting()
                 "comment": $('#overall_comment_input_id').val()
                 }
 
-            alert(commentContent.overall.comment)
             SendComments()
 
             }
@@ -482,17 +481,9 @@ function enable_commenting()
     $('#headline_comment_input_id').submit(
         function()
             {
-                alert('here')
+                //alert('here')
             }
         )
-
-
-
-
-
-
-
-
 
 
 
@@ -500,9 +491,8 @@ function enable_commenting()
     {
         commentContent.articleid = ArticleContent.server_id
         json_response = JSON.stringify(commentContent);
-            alert(json_response)
         
-        $.post("http://127.0.0.1:8000/comment_handler/", json_response);
+        $.post("/comment_handler/", json_response);
 
     }
     
