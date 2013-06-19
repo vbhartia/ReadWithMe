@@ -2,13 +2,13 @@
 <! Dashbaord>
 
 <head>
-<title>Dashboard {{ nav_user }} </title>
+<title> {{ user }} Articles </title>
 </head>
 <br />
 
 <div class="outer_container">
     <div class="section_title">
-        My Groups
+        My Articles
     </div>
     
     <br />
@@ -18,12 +18,32 @@
             <th>Article Image</th>
             <th>Headline</th>
             <th>Description</th>
+            <th>Author</th>
             <th>Share Date</th>
             <th>Publication Date</th>
             <th>News Source</th> 
         </tr>
-        <tr height="20px">
-        </tr>
+        {% for i in user_articles %}
+            <tr height="20px">
+                <td>
+                    <a href="\article\{{ i.id }}\{{ user }}\{{ i.loc_url }}">
+                        <img src="{{ i.image_url }}" width="125" height="125">
+                    </a>
+                </td>
+                <td>
+                    <a href="\article\{{ i.id }}\{{ user }}\{{ i.loc_url }}">
+                        {{ i.headline }}
+                    </a>
+                <td>
+                   {{ i.desription }}
+                </td>
+                <td>
+                   {{ i.author }}
+                </td>
+
+            </tr>
+        {% endfor %} 
+
         <tr>
         </tr>
     </table>

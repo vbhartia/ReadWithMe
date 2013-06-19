@@ -3,7 +3,7 @@
 
 
 <head>
-<title>To Do Replace</title>
+<title></title>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 </head>
 <br />
@@ -100,31 +100,14 @@
     // Make Ajax requests to get article contents
     // Render the content in the approperiate locations
 
-
-    // Setup Fake Content
-
     var articleContent = new Object();
     var commentContent = new Object();
-    /*ArticleContent.headline = "I like lots of rice"
-    ArticleContent.description = "I like asian rice"
-    ArticleContent.site_name = "CNBC.com"
-    ArticleContent.image_url = "www.google.com"
-    ArticleContent.author = "Varun Bharita"
-
-    var paras =[];
-
-    paras[0] = "Whats up dog"
-    paras[1] = "No way Varun Bhartia"
-    paras[2] = "Read With Me will be amazing"
-
-    ArticleContent.paras = paras; 
-    */
     
 
     // Add Contents to the document
 
     get_Article()/**/
-    getComments()
+    
 
     function get_Article()
     {
@@ -136,13 +119,6 @@
                       articleInfo)
                       .done(function(data) 
                                 {
-                                    /*
-                                    alert(data.headline)
-                                    alert(data.author)
-                                    alert(data.description)
-                                    alert(data.image_url)
-                                    alert(data.shared_by)
-                                    */
 
                                     articleContent = data
                                     add_article_content()
@@ -154,12 +130,16 @@
     function add_article_content()
     {
         $('#RWM_headline').append(articleContent.headline)
+        
+        $('title').append(articleContent.headline)
+
         $('#RWM_description').append(articleContent.description)    
         $('#RWM_news_source').append(articleContent.site_name)
-        //$("#RWM_news_picture").attr("src", ArticleContent.image_url)
+        $("#RWM_news_picture").attr("src", articleContent.image_url)
         $('#RWM_author').append(articleContent.author)
         
         add_paras()
+        getComments()
         
     }
 
@@ -219,27 +199,16 @@
         first_half = fullpath.substring(fullpath.indexOf('article')+8)
         end_index = first_half.indexOf('/')
         article_id = first_half.substring(0, end_index)
-        alert(article_id)
         return article_id
     }
 
 
-
     function getComments()
     {
-        alert('getting comments ')
         $.get("/comment_handler/",
-                      {"article_id":"1"})
+                      {"article_id":getArticleID()})
                       .done(function(data) 
                                 {
-                                    /*
-                                    alert(data.headline)
-                                    alert(data.author)
-                                    alert(data.description)
-                                    alert(data.image_url)
-                                    alert(data.shared_by)
-                                    */
-                                    alert(data)
                                     commentContent = jQuery.parseJSON(data)
                                     CommentPresentation()
                                 }
@@ -254,14 +223,13 @@
         $('#article_comments_id').html('');
                     
         var divCommentLoc = $('#article_comments_id').offset()
-        
-        alert(commentContent.inline.length)
+    
 
         for (var i=0; i < commentContent.inline.length; i++)
         {
             //Individual Comment Offset
             var commentLoc = $('#' + commentContent.inline[i].ids[commentContent.inline[i].ids.length-1]).offset()
-        
+
             var user_comment = "";
             user_comment += "<div class='rwm_comment_class' "
             user_comment += "style='top:"
@@ -276,11 +244,11 @@
             $('#article_comments_id').prepend(user_comment)
 
 
-        // Highlight Words
-        for(x in commentContent.inline[i].ids)
-        {
-            $(('#' + commentContent.inline[i].ids[x])).css('background', 'yellow')
-        }
+            // Highlight Words
+            for(x in commentContent.inline[i].ids)
+            {
+                $(('#' + commentContent.inline[i].ids[x])).css('background', 'yellow')
+            }
         
 
         }

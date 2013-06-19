@@ -14,7 +14,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 
 #Models
 from rwm_app.models import UserProfile, reader_article_store
@@ -73,6 +73,10 @@ def new_user(request):
         new_UserProfile.save()
         
         logged_in_user = authenticate(username = username, password = password)
+
+        logout(request)
+
+        login(request, logged_in_user)
         
     return login_user(request)
                              
@@ -84,13 +88,7 @@ def new_user(request):
                             
 def logout_user(request):
     logout(request)
-    return render_to_response(
-                            'home.html',{
-                                   'show':'login', 
-                                   'all_user_profile':UserProfile.objects.all(),  
-                                   'state':'You are now logged out'
-                                   }
-                           )
+    return homepage(request)
 
 #**************************************************
 #
@@ -122,14 +120,9 @@ def login_user(request):
                 state = "Your account is not active, please contact the site admin."
         else:
             state = "Your username and/or password were incorrect."
+    
     # User is not logged in. Render login page    
-    return render_to_response(
-                            'home.html',
-                                {                                
-                                'show':'login', 
-                                'state':state, 
-                                }
-                            )
+    return homepage(request)
 
 #**************************************************
 #
@@ -183,11 +176,14 @@ def my_articles(request):
     current_user = User.objects.get(username = request.user.username)
     current_UserProfile = UserProfile.objects.get(user = request.user.id)
 
+    all_user_articles = current_UserProfile.reader_article_store_set.all()
+
     return render_to_response(
                             'main_RWM_template.html',
                                 {
                                 'show':'my_articles',
-                                'user':request.user
+                                'user':request.user,
+                                'user_articles':all_user_articles,
                                 }
                             )
 
@@ -223,7 +219,6 @@ def iframe_bookmarklet(request):
     return render_to_response(
                             'iFrame_view.html',
                                 {
-                                'show':'article_base',
                                 'user':request.user
                                 }
                             )         
@@ -237,24 +232,40 @@ def iframe_bookmarklet(request):
 # - Ingest articles
 # @csrf_protect
 def article_handler(request):
-    
-    #print(request.raw_post_data)
 
     if request.method == 'POST':
         json_data = simplejson.loads(request.raw_post_data)
         current_UserProfile = UserProfile.objects.get(user = request.user.id)
         
+        # Create a loc URL
+        loc_url_from_headline = json_data['headline']
+        loc_url_from_headline = loc_url_from_headline.replace(" ", "_")
+        loc_url_from_headline = loc_url_from_headline.replace(",", "_")
+        loc_url_from_headline = loc_url_from_headline.replace("\"", "_")
+        loc_url_from_headline = loc_url_from_headline.replace(".", "_")
+        loc_url_from_headline = loc_url_from_headline.replace("/", "_")
+        loc_url_from_headline = loc_url_from_headline.replace("\\", "_")
+        loc_url_from_headline = loc_url_from_headline.replace("#", "_")
+        loc_url_from_headline = loc_url_from_headline.replace(":", "_")
+        loc_url_from_headline = loc_url_from_headline.replace("'", "_")
+        loc_url_from_headline = loc_url_from_headline.replace("?", "_")
+        print loc_url_from_headline
+
+
         new_article = reader_article_store(
                     headline = json_data['headline'],
                     author = json_data['author'],
+                    loc_url = loc_url_from_headline,
                     description = json_data['description'],
-                    image_url = 'http://www.google.com',
+                    image_url = json_data['image_url'],
                     article_JSON = request.raw_post_data,
                     comments_JSON = '',
                     shared_by = current_UserProfile,
                     publication_date = '2013-05-20',
                     shared_date = '2013-05-20',
                     )
+
+
     
         new_article.save()
         print new_article.id
@@ -320,8 +331,9 @@ def comment_handler(request):
 
 
   if request.method == 'GET':
-
-      current_article = reader_article_store.objects.get(id = 1)
+      article_id = request.GET.get('article_id', '')
+      print article_id
+      current_article = reader_article_store.objects.get(id = article_id)
 
       data = simplejson.dumps(current_article.comments_JSON)
       return HttpResponse(data, mimetype='application/json')
