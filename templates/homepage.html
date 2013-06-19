@@ -148,7 +148,9 @@
 
     $(function() {
 
-            var bookmarklet_javascript = ""
+    var domain = "http://rwm-stage.herokuapp.com/"
+
+    var bookmarklet_javascript = ""
     bookmarklet_javascript += "javascript:(function(){"
 
     // Ensure JQuery is available
@@ -160,7 +162,7 @@
     // Add the Read With Me script
     bookmarklet_javascript += "RWM_Script=document.createElement('SCRIPT');"
     bookmarklet_javascript += "RWM_Script.type='text/javascript';"
-    bookmarklet_javascript += "RWM_Script.src='http://127.0.0.1:8000/static/rwm_reader.js?x='+(Math.random());"
+    bookmarklet_javascript += "RWM_Script.src='" + domain + "/static/rwm_reader.js?x='+(Math.random());"
     bookmarklet_javascript += "document.getElementsByTagName('head')[0].appendChild(RWM_Script);"
     bookmarklet_javascript += "})();"
 

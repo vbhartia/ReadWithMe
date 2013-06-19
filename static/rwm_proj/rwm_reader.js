@@ -11,7 +11,7 @@ js.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
 
 document.head.appendChild(js);
 
-var domain = "http://127.0.0.1:8000"
+var domain = "http://rwm-stage.herokuapp.com/"
 
 var scraper_url = domain + "/static/screen_scraper.js?x=" + (Math.random())
 var final_article
@@ -84,8 +84,6 @@ function create_iFrame()
   URL_for_iFrame += domain + "/iframe/"
   //URL_for_iFrame += article_params
 
-  //alert(URL_for_iFrame)
-
   var create_iFrame = "";
   create_iFrame += "<iframe width='100%' id='reader_iFrame' height='100%' src='"
   create_iFrame += URL_for_iFrame
@@ -112,7 +110,6 @@ function create_iFrame()
       win.postMessage(
           final_article,
           domain)    
-          //alert('message sent')
   },
   500)
 
