@@ -3,29 +3,33 @@
 // Creates an iFrame to host the content and log the user in.
 
 
-//var js = document.createElement("script");
+var js = document.createElement("script");
 
 //js.type = "text/javascript";
-//js.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
+js.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
 
 //document.head.appendChild(js);
-var final_article;
+var final_article = new Object();
 
 var js = document.createElement("script");
 
 js.type = "text/javascript";
 //js.src = "http://127.0.0.1:8000/static/screen_scraper.js?x="+(Math.random());
 
-function parse(){
+function parses(){
 
-    var a=$.get({
-        type: "get",
-        url: "/static/rwm_proj/response/on_receive",
-        dataType: "json",
-        async:true,
-    });
-    final_article={a.title,a.domain,a.author,a.url,a.excerpt,a.lead_image_url,a.content};
-    
+    var a=$.get("/static/rwm_proj/response/on_receive",{URL:document.URL});
+    for(var key in a)
+    {
+        if (key=="title"){final_article.headline=key;}
+        if (key="domain"){final_article.site_name=key;}
+        if (key="author"){final_article.author=key;}
+        if (key="url"){final_article.url=key;}
+        if (key="excerpt"){final_article.description=key;}
+        if (key="lead_image_url"){final_article.image_url=key;}
+        if (key="content"){final_article.paras=key;}
+            
+    }
 /*
     function httpGet("/static/rwm_proj/response.py")
     {
@@ -41,11 +45,11 @@ function parse(){
 
 document.head.appendChild(js);
 
-var final_article = Get_Article_Content()
+//var final_article = Get_Article_Content()
 
 
 //*************************************** Create an iFrame ******************************************************************
-
+parses();
 
 // Get CSS for the reader
 function addCSS(url){
