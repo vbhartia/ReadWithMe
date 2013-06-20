@@ -92,8 +92,30 @@
 
             </td>
 
-            <td id='article_sharing'>
-                Sharing content here
+            <td id='article_sharing' style="background-color:black;z-index:1">
+                <li>
+                    <a id="friendmail" href="mailto:friend@example.com?subject=Check+out+this+article&body=http://127.0.0.1:8000/">Send to a friend</a>
+                </li>
+                <li>
+                <a id="twitta" href="https://twitter.com/share" class="twitter-share-button" data-url="http://127.0.0.1:8000/" data-hashtags="readwithme">Tweet</a>
+                </li>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <li>
+                <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=249052195198188";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div id="fbyo" class="fb-like" data-href="http://127.0.0.1:8000/" data-send="true" data-layout="box_count" data-width="52" data-show-faces="true"></div>
+                </li>
+                <li>
+                <a id="share" href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/" target="_blank">
+                    Share on Facebook
+                </a>
+                </li>
             </td>
         </tr>
         
@@ -147,6 +169,7 @@
 <script>
 
 // Set up an Event Listener to get the contents of the article
+$('article_content').insertBefore(#'article_sharing');
 
 var ArticleContent = new Object(); 
 var commentContent = new Object();
@@ -496,18 +519,6 @@ function enable_commenting()
 
     }
     
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
