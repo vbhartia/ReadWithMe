@@ -94,7 +94,7 @@
 
             <td id='article_sharing' style="background-color:black;z-index:1">
                 <li>
-                    <a id="friendmail" href="mailto:friend@example.com?subject=Check+out+this+article&body=http://127.0.0.1:8000/">Send to a friend</a>
+                    <a class="friendmail" href="mailto:friend@example.com?subject=Check%20out%20this%20article&body=http://127.0.0.1:8000/%20-%20">Send to a friend</a>
                 </li>
                 <li>
                 <a id="twitta" href="https://twitter.com/share" class="twitter-share-button" data-url="http://127.0.0.1:8000/" data-hashtags="readwithme">Tweet</a>
@@ -203,6 +203,8 @@ function add_article_content()
     send_content_to_server()
     
 }
+var subject = "check%20out%20this%20article"
+$(".friendmail").attr("href","mailto:friend@example.com?subject="+subject+"&body1=http://127.0.0.1:8000/%20-%20"+ArticleContent.headline+"%20-%20"+ArticleContent.description+"%20-%20")
 
 function add_paras()
 {
