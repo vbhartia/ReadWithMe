@@ -1,6 +1,4 @@
-<!- templates/nav.html>
-<!-Page Setup>
-<!- Setup HTML for all Pages>
+<!-- iframe.html -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -59,6 +57,39 @@
         background:yellow;
 
     }
+
+    .overall_comments_class
+    {
+
+        height:200px;
+        background:yellow;
+    }
+
+    .headline_comment_class
+    {
+
+        height:100px;
+
+
+    }
+
+    .user_headline_input_class
+    {
+
+        height:80px;
+        width:98%;
+        font-size:15pt;
+        font-weight:bold;
+        text-align:center;
+    }
+
+    .user_overall_input_class
+    {
+        height:80px;
+        width:98%;
+        font-size:12pt;
+        text-align:left;          
+    }
 </style>
 
 <div id="reading_contents">
@@ -68,21 +99,23 @@
 
     <table id='table_container' width='1100px'>
         <tr>
-            <td width='75%' id='overall_comments'>
+            <td width='75%' id='overall_comments' class='overall_comments_class'>
                 <!--Overall Comment Section -->
                     
                     <div id='headline_comment_id' class='headline_comment_class'>
                         <br/>
                         <h2>
-                            Overall questions or comments on this article
+                            Click here to leave questions or comments about this article
                         </h2>
                         <br/>
                     </div>
 
+                    <hr>
+
                     <div id='overall_comment_id' class='user_overall_comment_class'>
                         <br/>
                         <h4>
-                            click here to leave an overall comment about this article
+                            Click here to leave more detailed overall comments about this article
                         </h4>
 
                     </div>
@@ -174,11 +207,49 @@ function add_article_content()
     $('#RWM_description').append(ArticleContent.description)    
     $('#RWM_news_source').append(ArticleContent.site_name)
     $("#RWM_news_picture").attr("src", ArticleContent.image_url)
+        
+    $("#RWM_news_picture").load(function() 
+    {
+        size_image()    
+    })
+
+    
     $('#RWM_author').append(ArticleContent.author)
     
     add_paras()
     send_content_to_server()
     
+}
+
+function size_image()
+{
+
+    $('#RWM_news_picture').each(function() 
+    {
+        var maxWidth = 600; // Max width for the image
+        var maxHeight = 400;    // Max height for the image
+        var ratio = 0;  // Used for aspect ratio
+        var width = $(this).width();    // Current image width
+        var height = $(this).height();  // Current image height
+
+        // Check if current height is larger than max
+        if(height > maxHeight)
+        {
+            ratio = maxHeight / height; // get ratio for scaling image
+            $(this).css("height", maxHeight);   // Set new height
+            $(this).css("width", width * ratio);    // Scale width based on ratio
+            width = width * ratio;    // Reset width to match scaled image
+        }
+
+        // Check if the current width is larger than the max
+        if(width > maxWidth)
+        {
+            ratio = maxWidth / width;   // get ratio for scaling image
+            $(this).css("width", maxWidth); // Set new width
+            $(this).css("height", height * ratio);  // Scale height based on ratio
+            height = height * ratio;    // Reset height to match scaled image
+        }
+    })
 }
 
 function add_paras()
@@ -319,7 +390,8 @@ function enable_commenting()
             user_comment += (commentLoc.top - divCommentLoc.top)
             user_comment +="px'>"
             user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
-            user_comment +='<input type="text" id="user_comment_RWM_Viewer"/>'
+            user_comment +='<br/>'
+            user_comment +='<input type="text" id="user_comment_RWM_Viewer" class="inline_comment_input_class"/>'
             user_comment +='</div>'
             
 
@@ -394,13 +466,13 @@ function enable_commenting()
     {
 
        var user_comment = "";
-        user_comment += "<div class='user_headline_input_class' "
+        user_comment += "<div class='headline_comment_class' "
         user_comment +=">"
 
-        user_comment += "<br/>"
+        //user_comment += "<br/>"
 
-        user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
-        user_comment +='<input type="text" id="headline_comment_input_id"/>'
+        //user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
+        user_comment +='<input type="text" placeholder="Leave questions or comments about this article for your friends" id="headline_comment_input_id" class="user_headline_input_class"/>'
         user_comment +='</div>'
             
         $('#headline_comment_id').replaceWith(user_comment)
@@ -425,6 +497,13 @@ function enable_commenting()
 
             SendComments()
 
+            headline_comment_html = '<div class = "user_headline_input_class">'
+            headline_comment_html += '<br/>'
+            headline_comment_html += commentContent.headline.comment
+            headline_comment_html += '</div>'
+
+            $('#headline_comment_input_id').replaceWith(headline_comment_html)
+
             }
         )    
 
@@ -437,13 +516,13 @@ function enable_commenting()
     {
 
         var user_comment = "";
-        user_comment += "<div class='user_comment_input_class' "
+        user_comment += "<div class='user_overall_comment_class' "
         user_comment +=">"
 
-        user_comment += "<br/>"
+        //user_comment += "<br/>"
 
-        user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
-        user_comment +='<input type="text" id="overall_comment_input_id"/>'
+        //user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
+        user_comment +='<input type="text" id="overall_comment_input_id" placeholder="Leave more detailed thoughts about this article" class="user_overall_input_class"/>'
         user_comment +='</div>'
             
         $('#overall_comment_id').replaceWith(user_comment)
@@ -469,6 +548,13 @@ function enable_commenting()
                 }
 
             SendComments()
+
+            overall_comment_html = '<div class = "user_overall_input_class">'
+            overall_comment_html += '<br/>'
+            overall_comment_html += commentContent.overall.comment
+            overall_comment_html += '</div>'
+
+            $('#overall_comment_input_id').replaceWith(overall_comment_html)
 
             }
         ) 

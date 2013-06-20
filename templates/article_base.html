@@ -78,6 +78,12 @@
                             <div id='RWM_para'>
                             </div>
 
+                            <br/>   
+
+                            <div id='RWM_original_article_url'>
+                            </div>
+
+
                         </div>
                         
                     </div>
@@ -135,12 +141,56 @@
 
         $('#RWM_description').append(articleContent.description)    
         $('#RWM_news_source').append(articleContent.site_name)
-        $("#RWM_news_picture").attr("src", articleContent.image_url)
+        $('#RWM_news_picture').attr("src", articleContent.image_url)
         $('#RWM_author').append(articleContent.author)
-        
+
+        $("#RWM_news_picture").load(function() 
+        {
+            size_image()    
+        })
+
+        var original_article_url = ""
+        original_article_url += "<a href='" + jQuery.parseJSON(articleContent.article_JSON).url + "'>"
+        original_article_url += "Original Article"
+        original_article_url += "</a>"
+
+        $('#RWM_original_article_url').append(original_article_url)
+                
         add_paras()
         getComments()
         
+    }
+
+
+    function size_image()
+    {
+
+        $('#RWM_news_picture').each(function() 
+        {
+            var maxWidth = 600; // Max width for the image
+            var maxHeight = 400;    // Max height for the image
+            var ratio = 0;  // Used for aspect ratio
+            var width = $(this).width();    // Current image width
+            var height = $(this).height();  // Current image height
+
+            // Check if current height is larger than max
+            if(height > maxHeight)
+            {
+                ratio = maxHeight / height; // get ratio for scaling image
+                $(this).css("height", maxHeight);   // Set new height
+                $(this).css("width", width * ratio);    // Scale width based on ratio
+                width = width * ratio;    // Reset width to match scaled image
+            }
+
+            // Check if the current width is larger than the max
+            if(width > maxWidth)
+            {
+                ratio = maxWidth / width;   // get ratio for scaling image
+                $(this).css("width", maxWidth); // Set new width
+                $(this).css("height", height * ratio);  // Scale height based on ratio
+                height = height * ratio;    // Reset height to match scaled image
+            }
+        })
     }
 
     function add_paras()

@@ -24,7 +24,8 @@
             <th>News Source</th> 
         </tr>
         {% for i in user_articles %}
-            <tr height="20px">
+            
+            <tr height="20px" >
                 <td>
                     <a href="\article\{{ i.id }}\{{ user }}\{{ i.loc_url }}">
                         <img src="{{ i.image_url }}" width="125" height="125">
