@@ -403,10 +403,11 @@ p {
     font-size : 12pt;
     border-style : solid;
     border-color : black;
-    width : 200px;
-    height : 100px;
+    width : 300px;
+    height : 60px;
     background-color: yellow;
-    padding : 5pt; 
+    padding : 5pt;
+    text-align:left; 
 }
 
 .links_RWM_Viewer a:visited, .links_RWM_Viewer a:link {

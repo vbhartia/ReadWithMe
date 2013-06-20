@@ -23,7 +23,7 @@
             <th>Publication Date</th>
             <th>News Source</th> 
         </tr>
-        {% for i in user_articles %}
+        {% for i in user_articles reversed %}
             
             <tr height="20px" >
                 <td>
@@ -36,7 +36,7 @@
                         {{ i.headline }}
                     </a>
                 <td>
-                   {{ i.desription }}
+                   {{ i.description }}
                 </td>
                 <td>
                    {{ i.author }}
