@@ -30,7 +30,8 @@ def homepage(request):
     return render_to_response(
                             'main_RWM_template.html',
                                 { 
-                                'show':'homepage', 
+                                  'show':'homepage',
+                                  'user':request.user, 
                                 }
                              )
 
@@ -57,7 +58,6 @@ def new_user(request):
                                 'main_RWM_template.html',
                                     { 
                                     'show':'login', 
-                                    'all_users':User.objects.all(), 
                                     'state':state, 
                                     }
                                 )
@@ -137,7 +137,6 @@ def profile(request):
                         'home.html',
                             { 
                             'show':'login', 
-                            'all_users':User.objects.all(), 
                             'state':"You are not logged in"
                             }
                         )
@@ -148,14 +147,55 @@ def profile(request):
  
 
     return render_to_response(
-                        'home.html',
+                        'main_RWM_template.html',
                             {
                              'user':request.user,
                              'nav_RWMuser':current_UserProfile,
                              'show':'profile', 
-                             'all_user_profile':UserProfile.objects.all(), 
                              }
                         )
+
+#**************************************************
+#
+#       Update user profile
+#
+#**************************************************
+           
+def profile_update(request):
+    # Check if user is logged in. If not, direct to login page
+    if not request.user.is_authenticated():
+        return render_to_response(
+                        'home.html',
+                            { 
+                            'show':'login', 
+                            'all_users':User.objects.all(), 
+                            'state':"You are not logged in"
+                            }
+                        )
+    current_user = User.objects.get(username = request.user.username)
+    current_id = current_user.id
+
+    current_user.username = request.POST.get('username')
+    current_user.email = request.POST.get('email')
+    current_user.first_name = first = request.POST.get('first')
+    current_user.last_name = last = request.POST.get('last')
+    
+    if request.POST.get('password') != '':
+      current_user.set_password(request.POST.get('password'))
+      print 'changed password'
+      print request.POST.get('password')
+
+    current_user.save()
+ 
+
+    return render_to_response(
+                        'main_RWM_template.html',
+                            {
+                             'user':request.user,
+                             'show':'profile', 
+                             }
+                        )
+
 
 #**************************************************
 #

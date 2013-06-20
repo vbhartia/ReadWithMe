@@ -1,0 +1,85 @@
+<!# templates/profile.html>
+<! Profile View>
+
+
+<head>
+<title> {{ user.first_name }} {{ user.last_name }} Profile </title>
+</head>
+<br />
+
+<div class="outer_container">
+    <div class="section_title">
+        {{ user.first_name }}'s Profle
+    </div>
+    
+    <br/>
+
+      <div class="dashboard_group_title">
+        <a href="/profile/logout">
+          Log Out
+        </a>
+      </div>
+      <br/>
+
+    <div class="dashboard_section_item">
+
+      <div class="dashboard_group_title">
+        Change Profile Information
+
+        <form action="/profile/update/" method="post">
+                {% if next %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                {% endif %}
+                <center>
+                    <table width="60%">
+                        <tr>
+                            <td class="table_label">username:</td>
+                            <td>
+                                <input type="text" name="username" value="{{ user.username }}" />
+                            </td>
+                            <td style="text-align: left">
+                                *Please use the format "FirstName_LastName"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_label">password:</td>
+                            <td>
+                                <input type="password" name="password" value="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_label">email:</td>
+                            <td>
+                                <input type="email" name="email" value="{{ user.email }}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_label">First Name:</td>
+                            <td>
+                                <input type="First" name="first" value="{{ user.first_name }}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_label">Last Name:</td>
+                            <td>
+                                <input type="Last" name="last" value="{{ user.last_name }}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="Update Information" />
+                            </td>
+                    </table>
+                </center>
+            </form>
+
+
+      </div>
+      <br/>
+
+    </div>
+
+
+      <br/>
+

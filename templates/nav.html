@@ -20,6 +20,41 @@
     <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
     
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script>
+        $(function() 
+        {
+            $('#login_a_id').click(
+                                    function() 
+                                    {
+                                        $("#login_dialog_id").dialog(
+                                        {
+                                            height: 275,
+                                            width: 400,
+                                            modal: true
+                                        })
+                                    }   
+                                );
+                    
+
+            $('#new_user_a_id').click(
+                                    function() 
+                                    {
+                                        $("#new_user_dialog_id").dialog(
+                                        {
+                                            height: 500,
+                                            width: 500,
+                                            modal: true
+                                        })
+                                    }   
+                                );
+        }
+        )
+    </script>
+
+
 </head>
 
 <div class="nav_link" id="nav">
@@ -32,7 +67,22 @@
     <br />    
 
     <div id="nav_user_profile">
-       {{ user.first_name }} {{ user.last_name }}    
+       <a href ="/profile/">
+           {{ user.first_name }} {{ user.last_name }}
+       </a>
+
+       <br/>
+
+       <a id = "login_a_id">
+           Login
+       </a>
+
+       <br/>
+
+       <a id = "new_user_a_id">
+           New User
+       </a>
+
     </div>
 
     <br />
@@ -47,3 +97,107 @@
     <br />
 
 </div>
+
+
+    <div style="display:none" id="login_dialog_id" title="Login into to Read With Me!">
+        <br/>
+        <br/>
+            <form action="/profile/login/" method="post">
+                {% if next %}
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                {% endif %}
+                <center>
+                    <table>
+                        <tr>
+                            <th>
+                                username:
+                            </th>
+                            <td>
+                                <input type="text" name="username" value="{{ username}}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                password:
+                            </th>
+                            <td>
+                                <input type="password" name="password" value="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="submit" value="Log In" />
+                            </td>
+                        </tr>
+                    </table>
+                </center>       
+            </form>
+        <br/>
+    </div>
+
+    <div id="new_user_dialog_id" style="display:none" title="Join Read With Me!">
+        <br/>
+        <br/>
+        <br/>
+
+            <form action="/profile/new/" method="post">
+                {% if next %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                {% endif %}
+                <center>
+                    <table width="60%">
+                        <tr>
+                            <td class="table_label">username:</td>
+                            <td>
+                                <input type="text" name="username" value="" />
+                            </td>
+                            <td style="text-align: left">
+                                *Please use the format "FirstName_LastName"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_label">password:</td>
+                            <td>
+                                <input type="password" name="password" value="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_label">email:</td>
+                            <td>
+                                <input type="email" name="email" value="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_label">First Name:</td>
+                            <td>
+                                <input type="First" name="first" value="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_label">Last Name:</td>
+                            <td>
+                                <input type="Last" name="last" value="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_label">
+                                Invitation Code: (SecJ2014) 
+                            </td>
+                            <td>
+                                <input type="Last" name="invite_code" value="" /><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="New User" />
+                            </td>
+                    </table>
+                </center>
+   
+
+            </form>
+    </div>
+
+

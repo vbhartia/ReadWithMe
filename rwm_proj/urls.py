@@ -31,9 +31,10 @@ urlpatterns = patterns('',
     (r'^profile/new/$', 'rwm_app.views.new_user'),
     (r'^profile/login/$', 'rwm_app.views.login_user'),
     (r'^profile/logout/$', 'rwm_app.views.logout_user'), 
+    (r'^profile/update/$', 'rwm_app.views.profile_update'),
     
     # User management: Render user profile page
-    (r'^profile/([^/]+)', 'rwm_app.views.profile'),
+    (r'^profile/$', 'rwm_app.views.profile'),
 
     #****************************************************
     #

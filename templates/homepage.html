@@ -2,114 +2,14 @@
 <! Homepage>
 
 <head>
-<title>Read With Me </title>
+    <title>Read With Me </title>
+
 </head>
 
 <br/>
 
 <body>
 
-    <div id="login" style="background-color:#0000FF">
-    <br/>
-    <br/>
-    <form action="/profile/login/" method="post">
-                            {% if next %}
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{ next }}" />
-                            {% endif %}
-                            <center>
-                                <table>
-                                    <tr>
-                                        <th>
-                                            username:
-                                        </th>
-                                        <td>
-                                            <input type="text" name="username" value="{{ username}}" />
-                                        </td>
-                                        <th>
-                                            password:
-                                        </th>
-                                        <td>
-                                            <input type="password" name="password" value="" />
-                                        </td>
-                                        <td>
-                                            <input type="submit" value="Log In" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </center>
-                                
-                        </form>
-
-    <br/>
-    </div>
-
-<div id="new_user" style="background-color:#0000FF">
-    <br/>
-    <br/>
-    <br/>
-
-            <form action="/profile/new/" method="post">
-                {% if next %}
-                <input type="hidden" name="next" value="{{ next }}" />
-                {% endif %}
-                <center>
-                    <table width="60%">
-                        <tr>
-                            <td class="table_label">username:</td>
-                            <td>
-                                <input type="text" name="username" value="" />
-                            </td>
-                            <td style="text-align: left">
-                                *Please use the format "FirstName_LastName"
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="table_label">password:</td>
-                            <td>
-                                <input type="password" name="password" value="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="table_label">email:</td>
-                            <td>
-                                <input type="email" name="email" value="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="table_label">First Name:</td>
-                            <td>
-                                <input type="First" name="first" value="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="table_label">Last Name:</td>
-                            <td>
-                                <input type="Last" name="last" value="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="table_label">
-                                Invitation Code: (SecJ2014) 
-                            </td>
-                            <td>
-                                <input type="Last" name="invite_code" value="" /><br />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <input type="submit" value="New User" />
-                            </td>
-                    </table>
-                </center>
-   
-
-            </form>
-
-
-
-    </div>
 
 <div id="homepage_container_id" class="homepage_container_class">
     
@@ -201,11 +101,6 @@
 
 <script>
     
-
-
-        
-
-
 
     // Add the Bookmarklet
 
