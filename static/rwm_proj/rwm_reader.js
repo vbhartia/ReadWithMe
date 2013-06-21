@@ -55,7 +55,7 @@ function create_container()
 
   RWM_container += "<div id='container_RWM_reader_id'class='container_RWM_reader_class'>"
 
-    RWM_container += "<div id='clickme'>"
+    RWM_container += "<div class='page_text_RWM_Viewer' style='text-align:left'>"
         RWM_container += "Return to article"
     RWM_container += "</div>"
 
@@ -66,10 +66,15 @@ function create_container()
 
   $('#container_RWM_reader_id').click(function() 
     {
+        // turn off scrolling on master windwow
+        document.body.style.overflow = 'visible';
+        
       $('#container_RWM_reader_id').hide('slow', function() 
       {
       });
+      
 
+      //$('#container_RWM_reader_id').hide('slide', {}, 1000);
 
     });
 
@@ -107,6 +112,11 @@ function create_iFrame()
   create_iFrame += "'>"
   create_iFrame += "</iframe>"
   $('#iFrame_container_RWM_reader_id').append(create_iFrame)
+
+  // turn off scrolling on master windwow
+  //document.body.style.overflow = 'hidden'
+
+  $('body').css('overflow', 'hidden')
 
   // Post a message to the iFrame
 

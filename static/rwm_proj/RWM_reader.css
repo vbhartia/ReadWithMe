@@ -16,7 +16,7 @@
 .iFrame_container_RWM_reader_class
 {
     margin : auto auto;
-    width : 1200px;
+    width : 1000px;
     height : 95%;
     background : black;  
     overflow : hidden
@@ -70,7 +70,7 @@
 .article_content_RWM_Viewer_class
 {
     left: 10px;
-    width : 100%;
+    width : 650px;
     background : white;
     padding : 10pt;    
     text-align: left;
@@ -103,19 +103,19 @@
 .rwm_comment_class
 {
     position: absolute;
-    left : 30px;
+    left : 10px;
     font-size : 12pt;
     border-style : solid;
     border-color : black;
-    width : 300px;
+    width : 250px;
     height : 60px;
-    background-color: yellow;
+    background-color: rgba(255, 255, 0, 0.7);
     padding : 5pt; 
 }
 
 .inline_comment_input_class
 {
-    width : 290px;
+    width : 245px;
     height : 40px;
     vertical-align : text-top;
 

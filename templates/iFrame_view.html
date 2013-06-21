@@ -54,7 +54,7 @@
     }
     .user_headline_input_class .user_comment_input_class
     {
-        background:yellow;
+        background:rgba(255, 255, 255, .7);
 
     }
 
@@ -62,7 +62,7 @@
     {
 
         height:200px;
-        background:yellow;
+        background:rgba(255, 255, 255, .7);
     }
 
     .headline_comment_class
@@ -76,7 +76,7 @@
     .user_headline_input_class
     {
 
-        height:80px;
+        height:98%;
         width:98%;
         font-size:15pt;
         font-weight:bold;
@@ -85,15 +85,15 @@
 
     .user_overall_input_class
     {
-        height:80px;
+        height:100px;
         width:98%;
         font-size:12pt;
-        text-align:left;          
+        text-align:center;          
     }
 
     .sharing_cell
     {
-        background:yellow;
+        background:rgba(255, 255, 255, .7);
     }
 
 </style>
@@ -103,46 +103,56 @@
 
     <!--Table for Reading Properties -->
 
-    <table id='table_container' width='1100px'>
+    <table id='table_container' width='100%'>
         <tr>
-            <td width='700px' id='overall_comments' class='overall_comments_class'>
+            <td width='650px' id='overall_comments' class='overall_comments_class'>
                 
                 <!--Overall Comment Section -->
                     
                     <div id='headline_comment_id' class='headline_comment_class'>
-                        <br/>
-                        <h2>
-                            Click here to leave questions or comments about this article
-                        </h2>
-                        <br/>
+                        <input 
+                               id="headline_comment_input_id" 
+                               class="user_headline_input_class"
+                                placeholder="Questions or overall comments about this article" 
+                        />
+
                     </div>
 
                     <hr>
 
                     <div id='overall_comment_id' class='user_overall_comment_class'>
-                        <br/>
-                        <h4>
-                            Click here to leave more detailed overall comments about this article
-                        </h4>
-
+                        <input  type="text" 
+                                id="overall_comment_input_id" 
+                                class="user_overall_input_class"
+                                placeholder="Leave more detailed thoughts about this article" 
+                        />
                     </div>
-                
-                    <br/>
-                    <br/>
-
             </td>
 
             <td id='article_sharing' class='sharing_cell'>
-                Sharing content here
+                <strong>Share your thoughts</strong>
+
                 <br/>
 
-                <a id="email_article" > Click here to email the article, with your comments to a friend.
+                <a id="email_article" > 
+                    <img src = "{% static "email_icon.png" %}">
 
                 </a>
 
                 <br/>
 
-                <div id="sendFacebook"> Click here to send to your friend on facebook
+                <div id="sendFacebook"> 
+
+                    <img src = "{% static "facebook_share.png" %}">
+
+                </div>
+
+                <div id="Link to Article"> 
+
+                    URL to share with your friends
+                    <br/>
+                    <br/>
+                    <input readonly id="URL_share" type="text" name="article_url" value="" >
 
                 </div>
 
@@ -159,9 +169,7 @@
 
                 <div id='article_content_RWM_Viewer' class='article_content_RWM_Viewer_class'>
                     <br/>
-                    
-                
-                        
+                            
                         <br/>
                         <div id='RWM_headline'>
                         </div>
@@ -195,8 +203,6 @@
         </tr>
     </table>
 </div>
-
-
 
 
 
@@ -245,6 +251,9 @@ function getSharing()
     // Specify share on facebook functionality  
         facebook_sharer = "https://www.facebook.com/sharer/sharer.php?u=" + article_url
         
+        $("#URL_share").attr("value", article_url)
+
+        
 
 }
 
@@ -264,6 +273,7 @@ function listener(event)
         ArticleContent = event.data
         add_article_content()
         keep_listening = false
+
     }   
 }
 
@@ -280,7 +290,7 @@ function add_article_content()
         
     $("#RWM_news_picture").load(function() 
     {
-        size_image()    
+        size_image()
     })
 
     
@@ -296,8 +306,8 @@ function size_image()
 
     $('#RWM_news_picture').each(function() 
     {
-        var maxWidth = 600; // Max width for the image
-        var maxHeight = 400;    // Max height for the image
+        var maxWidth = 500; // Max width for the image
+        var maxHeight = 500;    // Max height for the image
         var ratio = 0;  // Used for aspect ratio
         var width = $(this).width();    // Current image width
         var height = $(this).height();  // Current image height
@@ -490,11 +500,10 @@ function enable_commenting()
             {
                     
             commentContent.inline.push(
-                {"ids" : ids, 
-                "username": ArticleContent.creator_username, 
-                "comment": $('#user_comment_RWM_Viewer').val()
-                }
-                
+                                        {"ids" : ids, 
+                                        "username": ArticleContent.creator_username, 
+                                        "comment": $('#user_comment_RWM_Viewer').val()
+                                        }
                                     );
 
             // send comment to server
@@ -534,23 +543,7 @@ function enable_commenting()
         }
     }
 
-
-   $('#headline_comment_id').mouseup(function(event)
-    {
-
-       var user_comment = "";
-        user_comment += "<div class='headline_comment_class' "
-        user_comment +=">"
-
-        //user_comment += "<br/>"
-
-        //user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
-        user_comment +='<input type="text" placeholder="Leave questions or comments about this article for your friends" id="headline_comment_input_id" class="user_headline_input_class"/>'
-        user_comment +='</div>'
-            
-        $('#headline_comment_id').replaceWith(user_comment)
-
-        $('input') // retrieve all inputs
+        $('#headline_comment_input_id') // retrieve all inputs
         .keydown(function(e) 
         { // bind keydown on all inputs
             if (e.keyCode == 13)
@@ -560,7 +553,7 @@ function enable_commenting()
             }
         });
 
-        $('input').submit(
+        $('#headline_comment_input_id').submit(
         function()
             {
                     
@@ -579,25 +572,8 @@ function enable_commenting()
 
             }
         )    
-    });
 
-
-   $('#overall_comment_id').mouseup(function(event)
-    {
-
-        var user_comment = "";
-        user_comment += "<div class='user_overall_comment_class' "
-        user_comment +=">"
-
-        //user_comment += "<br/>"
-
-        //user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
-        user_comment +='<input type="text" id="overall_comment_input_id" placeholder="Leave more detailed thoughts about this article" class="user_overall_input_class"/>'
-        user_comment +='</div>'
-            
-        $('#overall_comment_id').replaceWith(user_comment)
-
-        $('input') // retrieve all inputs
+        $('#overall_comment_input_id') // retrieve all inputs
         .keydown(function(e) 
         { // bind keydown on all inputs
             if (e.keyCode == 13)
@@ -609,7 +585,7 @@ function enable_commenting()
         });
 
 
-        $('input').submit(
+        $('#overall_comment_input_id').submit(
         function()
             {
                     
@@ -626,15 +602,6 @@ function enable_commenting()
 
             $('#overall_comment_input_id').replaceWith(overall_comment_html)
 
-            }
-        )  
-    });
-
-
-    $('#headline_comment_input_id').submit(
-        function()
-            {
-                //alert('here')
             }
         )
 
