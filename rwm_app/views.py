@@ -308,8 +308,6 @@ def article_handler(request):
 
     
         new_article.save()
-        print new_article.id
-        print current_UserProfile.user.username
 
         article_info_response = {
          'article_id': new_article.id,
