@@ -4,6 +4,7 @@
 <head>
 <title> {{ user }} Articles </title>
 <script src="http://127.0.0.1:8000/static/sorttable.js"></script>
+<link rel="stylesheet" href="http://127.0.0.1:8000/static/RWM.css" type="text/css" />
 </head>
 <br />
 
@@ -17,12 +18,12 @@
     <table class="sortable" id="sortabletable" width='100%'>
         <tr>
             <th>Article Image</th>
-            <th>Headline</th>
-            <th>Description</th>
-            <th>Author</th>
-            <th>Share Date</th>
-            <th>Publication Date</th>
-            <th>News Source</th> 
+            <th>Headline&nbsp;&#x2195;</th>
+            <th>Description&nbsp;&#x2195;</th>
+            <th>Author&nbsp;&#x2195;</th>
+            <th>Share Date&nbsp;&#x2195;</th>
+            <th>Publication Date&nbsp;&#x2195;</th>
+            <th>News Source&nbsp;&#x2195;</th> 
         </tr>
         {% for i in user_articles reversed %}
             
@@ -33,14 +34,20 @@
                     </a>
                 </td>
                 <td>
-                    <a href="\article\{{ i.id }}\{{ user }}\{{ i.loc_url }}">
+                    <a style="color:black;"href="\article\{{ i.id }}\{{ user }}\{{ i.loc_url }}">
                         {{ i.headline }}
                     </a>
-                <td>
+                <td width="35%">
                    {{ i.description }}
                 </td>
                 <td>
                    {{ i.author }}
+                </td>
+                <td>
+                    {{ i.shared_date.month }}/{{i.shared_date.day}}/{{i.shared_date.year}}
+                </td>
+                <td>
+                
                 </td>
 
             </tr>
