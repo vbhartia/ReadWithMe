@@ -16,7 +16,7 @@
 .iFrame_container_RWM_reader_class
 {
     margin : auto auto;
-    width : 1200px;
+    width : 1000px;
     height : 95%;
     background : black;  
     overflow : hidden
@@ -70,7 +70,7 @@
 .article_content_RWM_Viewer_class
 {
     left: 10px;
-    width : 100%;
+    width : 600px;
     background : white;
     padding : 10pt;    
     text-align: left;

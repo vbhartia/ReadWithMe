@@ -93,7 +93,7 @@
 
     .sharing_cell
     {
-        background:yellow;
+        background:rgba(255, 255, 255, .7);
     }
 
 </style>
@@ -103,9 +103,9 @@
 
     <!--Table for Reading Properties -->
 
-    <table id='table_container' width='1100px'>
+    <table id='table_container' width='100%'>
         <tr>
-            <td width='700px' id='overall_comments' class='overall_comments_class'>
+            <td width='600px' id='overall_comments' class='overall_comments_class'>
                 
                 <!--Overall Comment Section -->
                     
@@ -133,16 +133,29 @@
             </td>
 
             <td id='article_sharing' class='sharing_cell'>
-                Sharing content here
+                Share your thoughts
+
                 <br/>
 
-                <a id="email_article" > Click here to email the article, with your comments to a friend.
+                <a id="email_article" > 
+                    <img src = "{% static "email_icon.png" %}">
 
                 </a>
 
                 <br/>
 
-                <div id="sendFacebook"> Click here to send to your friend on facebook
+                <div id="sendFacebook"> 
+
+                    <img src = "{% static "facebook_share.png" %}">
+
+                </div>
+
+                <div id="Link to Article"> 
+
+                    URL to share with your friends
+                    <br/>
+                    <br/>
+                    <input readonly id="URL_share" type="text" name="article_url" value="" >
 
                 </div>
 
@@ -199,8 +212,6 @@
 
 
 
-
-
 <script>
 
 // Set up an Event Listener to get the contents of the article
@@ -245,6 +256,9 @@ function getSharing()
     // Specify share on facebook functionality  
         facebook_sharer = "https://www.facebook.com/sharer/sharer.php?u=" + article_url
         
+        $("#URL_share").attr("value", article_url)
+
+        
 
 }
 
@@ -264,6 +278,7 @@ function listener(event)
         ArticleContent = event.data
         add_article_content()
         keep_listening = false
+
     }   
 }
 
@@ -280,7 +295,7 @@ function add_article_content()
         
     $("#RWM_news_picture").load(function() 
     {
-        size_image()    
+        size_image()
     })
 
     
@@ -296,8 +311,8 @@ function size_image()
 
     $('#RWM_news_picture').each(function() 
     {
-        var maxWidth = 600; // Max width for the image
-        var maxHeight = 400;    // Max height for the image
+        var maxWidth = 500; // Max width for the image
+        var maxHeight = 500;    // Max height for the image
         var ratio = 0;  // Used for aspect ratio
         var width = $(this).width();    // Current image width
         var height = $(this).height();  // Current image height
@@ -490,11 +505,10 @@ function enable_commenting()
             {
                     
             commentContent.inline.push(
-                {"ids" : ids, 
-                "username": ArticleContent.creator_username, 
-                "comment": $('#user_comment_RWM_Viewer').val()
-                }
-                
+                                        {"ids" : ids, 
+                                        "username": ArticleContent.creator_username, 
+                                        "comment": $('#user_comment_RWM_Viewer').val()
+                                        }
                                     );
 
             // send comment to server
