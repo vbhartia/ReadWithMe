@@ -27,8 +27,9 @@
     <br />    
 
     <div id="nav_user_profile">
-       {{ user.first_name }} {{ user.last_name }}    
-        <br /><a class="page_text" href = "/logout/" target="_blank"> Log Out </a>
+       <a href ="/profile/" target="_blank">
+           {{ user.first_name }} {{ user.last_name }}
+       </a>
     </div>
 
     <br />
@@ -147,16 +148,16 @@
 
                 </div>
 
-                <div id="Link to Article"> 
+                <div id="linktoArticle"> 
+
+                    <br/>
 
                     URL to share with your friends
-                    <br/>
+                    
                     <br/>
                     <input readonly id="URL_share" type="text" name="article_url" value="" >
 
                 </div>
-
-
 
             </td>
         </tr>
@@ -219,8 +220,8 @@ commentContent.inline = new Array();
 
 var article_url = ''
 
-//var domain = 'http://127.0.0.1:8000'
-var domain = "http://rwm-stage.herokuapp.com"
+var domain = 'http://127.0.0.1:8000'
+//var domain = "http://rwm-stage.herokuapp.com"
 
 var facebook_sharer = '';
 
@@ -252,8 +253,6 @@ function getSharing()
         facebook_sharer = "https://www.facebook.com/sharer/sharer.php?u=" + article_url
         
         $("#URL_share").attr("value", article_url)
-
-        
 
 }
 
@@ -543,67 +542,67 @@ function enable_commenting()
         }
     }
 
-        $('#headline_comment_input_id') // retrieve all inputs
-        .keydown(function(e) 
-        { // bind keydown on all inputs
-            if (e.keyCode == 13)
-            {   
-                // enter was pressed
-                $(this).closest('input').submit(); // submit the current form
+    $('#headline_comment_input_id') // retrieve all inputs
+    .keydown(function(e) 
+    { // bind keydown on all inputs
+        if (e.keyCode == 13)
+        {   
+            // enter was pressed
+            $(this).closest('input').submit(); // submit the current form
+        }
+    });
+
+    $('#headline_comment_input_id').submit(
+    function()
+        {
+                
+        commentContent.headline = {
+            "comment": $('#headline_comment_input_id').val()
             }
-        });
 
-        $('#headline_comment_input_id').submit(
-        function()
-            {
-                    
-            commentContent.headline = {
-                "comment": $('#headline_comment_input_id').val()
-                }
+        SendComments()
 
-            SendComments()
+        headline_comment_html = '<div class = "user_headline_input_class">'
+        headline_comment_html += '<br/>'
+        headline_comment_html += commentContent.headline.comment
+        headline_comment_html += '</div>'
 
-            headline_comment_html = '<div class = "user_headline_input_class">'
-            headline_comment_html += '<br/>'
-            headline_comment_html += commentContent.headline.comment
-            headline_comment_html += '</div>'
+        $('#headline_comment_input_id').replaceWith(headline_comment_html)
 
-            $('#headline_comment_input_id').replaceWith(headline_comment_html)
+        }
+    )    
 
+    $('#overall_comment_input_id') // retrieve all inputs
+    .keydown(function(e) 
+    { // bind keydown on all inputs
+        if (e.keyCode == 13)
+        {   
+            // enter was pressed
+            //alert('Submitting Overall comment')
+            $(this).closest('input').submit(); // submit the current form
+        }
+    });
+
+
+    $('#overall_comment_input_id').submit(
+    function()
+        {
+                
+        commentContent.overall = {
+            "comment": $('#overall_comment_input_id').val()
             }
-        )    
 
-        $('#overall_comment_input_id') // retrieve all inputs
-        .keydown(function(e) 
-        { // bind keydown on all inputs
-            if (e.keyCode == 13)
-            {   
-                // enter was pressed
-                //alert('Submitting Overall comment')
-                $(this).closest('input').submit(); // submit the current form
-            }
-        });
+        SendComments()
 
+        overall_comment_html = '<div class = "user_overall_input_class">'
+        overall_comment_html += '<br/>'
+        overall_comment_html += commentContent.overall.comment
+        overall_comment_html += '</div>'
 
-        $('#overall_comment_input_id').submit(
-        function()
-            {
-                    
-            commentContent.overall = {
-                "comment": $('#overall_comment_input_id').val()
-                }
+        $('#overall_comment_input_id').replaceWith(overall_comment_html)
 
-            SendComments()
-
-            overall_comment_html = '<div class = "user_overall_input_class">'
-            overall_comment_html += '<br/>'
-            overall_comment_html += commentContent.overall.comment
-            overall_comment_html += '</div>'
-
-            $('#overall_comment_input_id').replaceWith(overall_comment_html)
-
-            }
-        )
+        }
+    )
 
 
 

@@ -11,8 +11,8 @@ js.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
 
 document.head.appendChild(js);
 
-var domain = "http://rwm-stage.herokuapp.com/"
-//var domain = "http://127.0.0.1:8000"
+//var domain = "http://rwm-stage.herokuapp.com/"
+var domain = "http://127.0.0.1:8000"
 
 var scraper_url = domain + "/static/screen_scraper.js?x=" + (Math.random())
 var final_article
@@ -55,7 +55,7 @@ function create_container()
 
   RWM_container += "<div id='container_RWM_reader_id'class='container_RWM_reader_class'>"
 
-    RWM_container += "<div class='page_text_RWM_Viewer' style='text-align:left'>"
+    RWM_container += "<div class='page_text_RWM_Viewer' style='float:left text-align:left'>"
         RWM_container += "Return to article"
     RWM_container += "</div>"
 
@@ -69,7 +69,7 @@ function create_container()
         // turn off scrolling on master windwow
         document.body.style.overflow = 'visible';
         
-      $('#container_RWM_reader_id').hide('slow', function() 
+      $('#container_RWM_reader_id').hide(function() 
       {
       });
       

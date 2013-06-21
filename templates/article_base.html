@@ -1,6 +1,7 @@
 <!# article_base.html>
 <! Renders the view for all article>
 
+{% load staticfiles %}
 
 <head>
 <title></title>
@@ -16,6 +17,7 @@
         {
             margin: auto;
             border-style:solid;
+            width:1000px;
             
         }
 
@@ -37,24 +39,45 @@
         .overall_comment_cell_class
         {
             height: 210px;
-            width: 700px;
-            background:yellow;
+            width: 650px;
+            background:rgba(255, 255, 255, .7);
 
         }
 
+        .sharing_cell
+        {
+            width:350px;
+            background:rgba(255, 255, 255, .7);
+        }
+
+        .article_content_Render_class
+        {
+            width:650px;
+
+        }
     </style>
+
+    <!-- Facebook Metatags -->
+
+
+
+
+
+    
+
+
+
 
 
     <div id='content_container'>
         
         <!--Table for Reading Properties -->
 
-        <table width = '1100px' id = 'table_container'>
+        <table width = '100%' id ='table_container'>
             <tr>
-                <td id='overall_comments' class='overall_comment_cell_class'>
+                <td width='650px' id='overall_comments' class='overall_comment_cell_class'>
               
-                        <br/>
-                            
+                           
                         <!-- Overall Comment Section -->
                             
                         <div id='headline_comment_id' class='headline_comment_class'>
@@ -81,8 +104,35 @@
                 </td>
                 
 
-                <td>
-                    Sharing!!!!!!
+                <td id='article_sharing' class='sharing_cell'>
+                    <strong>Share your thoughts</strong>
+
+                    <br/>
+
+                    <a id="email_article" > 
+                        <img src = "{% static "email_icon.png" %}">
+
+                    </a>
+
+                    <br/>
+
+                    <div id="sendFacebook"> 
+
+                        <img src = "{% static "facebook_share.png" %}">
+
+                    </div>
+
+                    <div id="linktoArticle"> 
+
+                        <br/>
+
+                        URL to share with your friends
+                        
+                        <br/>
+                        <input readonly id="URL_share" type="text" name="article_url" value="" >
+
+                    </div>
+
                 </td>
                                 
                         <br/>
@@ -90,7 +140,6 @@
             <tr>
                 <td>                    <!-- Reading content -->
 
-                        
                         <div class="article_content_Render_class">
 
                             <div id='RWM_headline'>
@@ -170,6 +219,8 @@
 
                                     articleContent = data
                                     add_article_content()
+                                    getSharing()
+                                    addOpenGraphTags()
                                 }
                             )
 
@@ -362,17 +413,75 @@
 
     function addOpenGraphTags()
     {
+        var oGMetaTags = ""
+
+        //Headline Tag
+        oGMetaTags += "<meta property='og:title' content='"
+        oGMetaTags += articleContent.headline + "' />"
+
+        //URL Tag
+        oGMetaTags += "<meta property='og:url' content='"
+        oGMetaTags += window.location.href + "' />"
+
+        //Site Name
+        oGMetaTags += "<meta property='og:site_name' content='"
+        oGMetaTags += "Read With Me" + "' />"
+
+        //Type
+        oGMetaTags += "<meta property='og:type' content='"
+        oGMetaTags += "article" + "' />"
 
         //http://davidwalsh.name/facebook-meta-tags
         //<meta property="og:image" content="http://davidwalsh.name/wp-content/themes/klass/img/facebooklogo.png"/>
-
-        //<meta property="og:url" content="http://davidwalsh.name/facebook-meta-tags"/>
-
-
-
-
-        $('head').append(articleContent.headline)
+        
+        $('body').prepend(oGMetaTags)
 
     }
+
+    var domain = 'http://127.0.0.1:8000'
+    //var domain = "http://rwm-stage.herokuapp.com"
+
+    var facebook_sharer = '';
+
+    function getSharing()
+    {
+        //article_url = domain + "/" + "article" + "/" + ArticleContent.server_id + "/" + ArticleContent.creator_username + "/" + ArticleContent.loc_url
+
+        var article_url = window.location.href
+
+        //setup mailto functionality 
+
+
+            var mailToUrl = ""
+
+            mailToUrl += "mailto:?to="
+
+            // Subject Text
+            mailToUrl += "&subject="
+            mailToUrl += "My thoughts on \"" + articleContent.headline + "\""
+
+            // Body Text
+            mailToUrl += "&body="
+            mailToUrl += "What do you think of this? - %0d" + "%09" + articleContent.headline
+            mailToUrl += "- ( " + article_url + " )"
+
+            // Closing Text
+            mailToUrl += "%0d" + "%0d" + "%0d"
+            mailToUrl += "Share your thoughts on Read With Me - " + domain
+            
+            $("#email_article").attr("href", mailToUrl)
+
+        // Specify share on facebook functionality  
+            facebook_sharer = "https://www.facebook.com/sharer/sharer.php?u=" + article_url
+            
+            $("#URL_share").attr("value", article_url)
+
+    }
+
+    $('#sendFacebook').click(
+        function() 
+        {
+            window.open(facebook_sharer , 'sharer', 'width=626,height=436');
+        });
 
 </script>
