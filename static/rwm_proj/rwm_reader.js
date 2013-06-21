@@ -54,8 +54,24 @@ function create_container()
   //RWM_container += "</style>"
 
   RWM_container += "<div id='container_RWM_reader_id'class='container_RWM_reader_class'>"
+
+    RWM_container += "<div id='clickme'>"
+        RWM_container += "Return to article"
+    RWM_container += "</div>"
+
   RWM_container += "</div>"
   $('body').prepend(RWM_container)
+
+  // Close the article window
+
+  $('#container_RWM_reader_id').click(function() 
+    {
+      $('#container_RWM_reader_id').hide('slow', function() 
+      {
+      });
+
+
+    });
 
   // Setup the iFrame container - 95% height and width
   var iFrame_container = "";
@@ -70,7 +86,7 @@ function create_container()
       {
           top: '0%'
       }, 
-      2000 
+      1000 
   );
 
   create_iFrame()
@@ -115,6 +131,7 @@ function create_iFrame()
   500)
 
 }
+
 
 
 
