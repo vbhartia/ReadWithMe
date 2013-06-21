@@ -4,6 +4,19 @@
 <head>
 <title> {{ user }} Articles </title>
 <script src="http://127.0.0.1:8000/static/sorttable.js"></script>
+<link rel="stylesheet" href="http://127.0.0.1:8000/static/RWM.css" type="text/css" />
+<style>
+div#popup {
+  display: none;
+  position: absolute;
+  width: 280px;
+  padding: 10px;
+  background: #eeeeee;
+  color: #000000;
+  border: 1px solid #1a1a1a;
+  font-size: 90%;
+}
+</style>
 </head>
 <br />
 
@@ -17,35 +30,76 @@
     <table class="sortable" id="sortabletable" width='100%'>
         <tr>
             <th>Article Image</th>
-            <th>Headline</th>
-            <th>Description</th>
-            <th>Author</th>
-            <th>Share Date</th>
-            <th>Publication Date</th>
-            <th>News Source</th> 
+            <th>Headline&nbsp;&#x2195;</th>
+            <th>Description&nbsp;&#x2195;</th>
+            <th>Author&nbsp;&#x2195;</th>
+            <th>Share Date&nbsp;&#x2195;</th>
+            <th>Publication Date&nbsp;&#x2195;</th>
+            <th>News Source&nbsp;&#x2195;</th> 
         </tr>
         {% for i in user_articles reversed %}
             
-            <tr height="20px" >
+            <tr height="20px">
                 <td>
                     <a href="\article\{{ i.id }}\{{ user }}\{{ i.loc_url }}">
                         <img src="{{ i.image_url }}" width="125" height="125">
                     </a>
                 </td>
                 <td>
-                    <a href="\article\{{ i.id }}\{{ user }}\{{ i.loc_url }}">
+                    <a class="trigger" id={{i.id}} style="color:black;"href="\article\{{ i.id }}\{{ user }}\{{ i.loc_url }}">
                         {{ i.headline }}
                     </a>
-                <td>
+                <td width="35%">
                    {{ i.description }}
                 </td>
                 <td>
                    {{ i.author }}
                 </td>
+                <td>
+                    {{ i.shared_date.month }}/{{i.shared_date.day}}/{{i.shared_date.year}}
+                </td>
+                <td>
+                
+                </td>
 
             </tr>
         {% endfor %} 
 
-        <tr>
-        </tr>
     </table>
+    <div id="popup">
+        <h3>Headline Comment: </h3>
+        <div id="grabnrun"></div>
+    </div>
+    
+<script>
+    $(function() {
+      var moveLeft = 20;
+      var moveDown = 10;
+    
+      $('.trigger').hover(function(e) {
+        var id = jQuery(this).attr("id");
+        comment(id);
+        $("div#grabnrun").text(crazy);
+        $('div#popup').show();
+          //.css('top', e.pageY + moveDown)
+          //.css('left', e.pageX + moveLeft)
+          //.appendTo('body');
+      }, function() {
+        $('div#popup').hide();
+        $('div#grabnrun').text(' ');
+      });
+    
+      $('.trigger').mousemove(function(e) {
+        $("div#popup").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+      });
+    
+    });
+    var crazy;
+    var comment = function(id){
+        $.get("/comment_handler/",{"article_id":id}).done(function(data){
+            commentContent = jQuery.parseJSON(data);
+            crazy=commentContent.headline.comment;
+        })
+        
+    }
+</script>
