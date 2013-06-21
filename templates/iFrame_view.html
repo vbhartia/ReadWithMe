@@ -90,6 +90,12 @@
         font-size:12pt;
         text-align:left;          
     }
+
+    .sharing_cell
+    {
+        background:yellow;
+    }
+
 </style>
 
 <div id="reading_contents">
@@ -126,8 +132,22 @@
 
             </td>
 
-            <td id='article_sharing'>
+            <td id='article_sharing' class='sharing_cell'>
                 Sharing content here
+                <br/>
+
+                <a id="email_article" > Click here to email the article, with your comments to a friend.
+
+                </a>
+
+                <br/>
+
+                <div id="sendFacebook"> Click here to send to your friend on facebook
+
+                </div>
+
+
+
             </td>
         </tr>
         
@@ -188,6 +208,52 @@
 var ArticleContent = new Object(); 
 var commentContent = new Object();
 commentContent.inline = new Array(); 
+
+//var getSharing = new function()
+
+var article_url = ''
+var domain = 'http://127.0.0.1:8000'
+
+//var domain = "http://rwm-stage.herokuapp.com"
+
+var facebook_sharer = '';
+
+function getSharing()
+{
+    article_url = domain + "/" + "article" + "/" + ArticleContent.server_id + "/" + ArticleContent.creator_username + "/" + ArticleContent.loc_url
+
+    //setup mailto functionality 
+        var mailToUrl = ""
+
+        mailToUrl += "mailto:?to="
+
+        // Subject Text
+        mailToUrl += "&subject="
+        mailToUrl += "My thoughts on \"" + ArticleContent.headline + "\""
+
+        // Body Text
+        mailToUrl += "&body="
+        mailToUrl += "What do you think of this? - %0d" + "%09" + ArticleContent.headline
+        mailToUrl += "- ( " + article_url + " )"
+
+        // Closing Text
+        mailToUrl += "%0d" + "%0d" + "%0d"
+        mailToUrl += "Share your thoughts on Read With Me - " + domain
+        
+        $("#email_article").attr("href", mailToUrl)
+
+    // Specify share on facebook functionality  
+        facebook_sharer = "https://www.facebook.com/sharer/sharer.php?u=" + article_url
+        
+
+}
+
+$('#sendFacebook').click(
+    function() 
+    {
+        window.open(facebook_sharer , 'sharer', 'width=626,height=436');
+    });
+
 
 var keep_listening = true;
 
@@ -301,6 +367,9 @@ function send_content_to_server()
             {
                 ArticleContent.server_id = data.article_id
                 ArticleContent.creator_username = data.username
+                ArticleContent.loc_url = data.loc_url
+                getSharing()
+                
             }
         );
     
@@ -510,9 +579,6 @@ function enable_commenting()
 
             }
         )    
-
-
-        
     });
 
 
@@ -584,24 +650,6 @@ function enable_commenting()
     }
     
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-    
-    
     
 </script>

@@ -314,6 +314,7 @@ def article_handler(request):
         article_info_response = {
          'article_id': new_article.id,
          'username': current_UserProfile.user.username,
+         'loc_url': new_article.loc_url,
         }
 
         data = simplejson.dumps(article_info_response)
@@ -339,6 +340,7 @@ def article_handler(request):
          'image_url': currArticle.image_url,
          'article_JSON': currArticle.article_JSON,
          'shared_by': currArticle.shared_by.user.username,
+         'loc_url': currArticle.loc_url,
          #'publication_date': currArticle.publication_date,
          #'shared_date': currArticle.shared_date,
       }
@@ -367,8 +369,6 @@ def comment_handler(request):
       print current_article.comments_JSON
       print json_data['articleid']
       return HttpResponse('ok')
-
-
 
   if request.method == 'GET':
       article_id = request.GET.get('article_id', '')

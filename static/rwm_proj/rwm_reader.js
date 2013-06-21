@@ -11,8 +11,8 @@ js.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
 
 document.head.appendChild(js);
 
-var domain = "http://rwm-stage.herokuapp.com/"
-//var domain = "http://127.0.0.1:8000"
+//var domain = "http://rwm-stage.herokuapp.com/"
+var domain = "http://127.0.0.1:8000"
 
 var scraper_url = domain + "/static/screen_scraper.js?x=" + (Math.random())
 var final_article
