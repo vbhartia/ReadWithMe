@@ -268,7 +268,6 @@ sorttable = {
   sort_alpha: function(a,b) {
     if (a[0]==b[0]) return 0;
     if (a[0].match(/^\W/)){
-        console.log(a[0]);
         if(b[0].match(/^\W/)){
             if(a[0]<b[0]) return -1;
         }
@@ -505,4 +504,3 @@ var forEach = function(object, block, context) {
 		resolve.forEach(object, block, context);
 	}
 };
-
