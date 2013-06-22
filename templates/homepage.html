@@ -1,51 +1,74 @@
 <!# templates/homepage.html>
 <! Homepage>
 
+{% load staticfiles %}
+
 <head>
     <title>Read With Me </title>
+
+    <script src="{% static "jquery.crSpline.js" %}"></script>
 
 </head>
 
 <br/>
 
 <body>
+    <style>
+        .fadein { position:relative; width:500px; height:332px; }
+.fadein img { position:absolute; left:0; top:0; }
+
+.mover {
+    position: absolute;
+    z-index: 5;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+    </style>
 
 
 <div id="homepage_container_id" class="homepage_container_class">
     
-    <div id="homepage_logo_id" class="homepage_logo_class">
-        <center>
-            Welcome to Read With Me 
-        </center>
-    </div>
-    
+
     <br />
     
     <div id="homepage_add_reader_id" class="homepage_add_reader_class">
        <table border='1' width='100%'>
             <tr>
-                <td width='50%'>
-                    <br />
-                        <center>
-                            Add the Read With Me Reader instructions
-                        </center>
-                    <br />
+                <td width='633px' height='288px'>
+                    
+                    <div class="fadein">
+                      <img src="{% static "clean_reading.png" %}">
+
+                      <img src="{% static "share_your_thoughts.png" %}">
+
+                      <img src="{% static "thoughts_in_article.png" %}">
+                    </div>
+                        
                 </td>
 
                 <td>
-                    <center>
                         <h2>
-                            MOVE THIS LINK TO YOUR FAVORITES
+                            Drag "Read With Me" into the favorites bar
                         </h2>
-                        
-                        <a id="bookmarkme" href="#" rel="sidebar" title="add to bookmarks">
-                            Read With Me
+                        <br/>
+                        <br/>
+                            
+                        <div id="instruction_window">
 
+                            <img id="browser_header" src="http://127.0.0.1:8000/static/Browswer_header_no_rwm.png">
+                            
+                            <br/>
+                            <br/>
+                            <br/>
 
-                        </a>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        DRAG ME --> 
+                        <a id="bookmarkme" href="#" rel="sidebar" title="add to bookmarks">Read With Me</a>
+                         <-- To Favorites
                         
-                    </center>
-                    
                 </td>
             </tr>
        </table>
@@ -59,37 +82,49 @@
     <div class="homepage_instructions_container_class">
     
         <table border='1' width='100%'>
-            <tr>
-                <td>
+            <tr height='100%'>
+                <td width='33%' height='100%'>
                     <div class="hompage_instruction_block_class">
-                        <br/>
-                        <br/>
-                            First step - use the reader
-                                - Get rid of the ads
-                                - Nicely spaced, clean reading view
-                        <br/>
+                        
+                            1. Use Read With Me on any article
+                                <br/>
+                                <p style="text-align:left; padding:10px">
+                                    One click:
+                                    <br/>
+                                    - Remove ads
+                                    <br/>
+                                    - Add your thoughts to the article
+                                </p>
+                            
                     </div>                
                 </td>
-                <td>
+                <td width='33%'>
                     <div class="hompage_instruction_block_class">
-                        <br/>
-                        <br/>
-                            Second step - Leave your thoughts in the article
-                                - Add summary text
-                                - Add comments inline
-                        <br/>
+                            2. Leave your thoughts in the article
+                            <br/>
+                            <p style="text-align:left; padding:10px">
+                                - Comment in the article
+                                <br/> 
+                                - Add questions and details
+                            </p>
                     </div>                
                 </td>
-                <td>
+                <td width='33%'>
                     <div class="hompage_instruction_block_class">
-                        <br/>
-                        <br/>
-                            Share your thoughts and the article with your friends
-                                - Friends can see not only your comments, but your thougthts as well!
-                        <br/>
+                            3. Share your thoughts with your friends
+                            <br/>
+                            <p style="text-align:left; padding:10px">
+                                 - Email
+                                 <br/>
+                                 - Facebook
+                                 <br/>
+                                 - Unique URLs for each article
+                            </p>
+
                     </div>                
                 </td>            
             </tr>
+
         </table>
     </div>    
 </div>
@@ -100,14 +135,81 @@
 </body>
 
 <script>
-    
+    $(function()
+    {
+        $('.fadein img:gt(0)').hide();
+        setInterval(function(){
+          $('.fadein :first-child').fadeOut()
+             .next('img').fadeIn()
+             .end().appendTo('.fadein');}, 
+          4000);
+
+        var start = new Object();
+        var end = new Object();
+        
+    $('#browser_header').load(function()
+    {
+
+
+
+        var image_loc = $('#browser_header').offset()
+        var image_height = $('#browser_header').height()
+
+
+        start.x = $('#bookmarkme').offset().left
+        start.y = $('#bookmarkme').offset().top
+
+        end.x = image_loc.left + 15
+        end.y = image_loc.top + image_height - 25
+    })
+
+
+
+        setInterval(
+                    function()
+                    {
+                        var image_animate = '';
+                        image_animate += '<div class="mover" id="icon">'
+                        image_animate += ' Read With Me '
+                        image_animate += '</div>'
+
+
+                        $('#browser_header').attr("src","/static/Browswer_header_no_rwm.png");
+
+
+                        $(image_animate)
+                            .appendTo($('#instruction_window'))
+                            .animate(
+                                {crSpline: $.crSpline.buildSequence(
+                                    [[start.x, start.y], 
+                                     [start.x + 100, start.y - 50],
+                                     [end.x, end.y]])
+                                },
+                                    3000, //time
+                                    function() 
+                                    {
+                                        $('.mover').remove()
+                                        $('#browser_header').attr("src","/static/Browswer_header_with_rwm.png");
+                                    }
+
+                                    );
+                    },
+                    4000
+                   );
+
+
+
+        });
+
+    //});
+
 
     // Add the Bookmarklet
 
     $(function() {
 
-    var domain = "http://rwm-stage.herokuapp.com"
-    //var domain = "http://127.0.0.1:8000"
+    //var domain = "http://rwm-stage.herokuapp.com"
+    var domain = "http://127.0.0.1:8000"
 
     var bookmarklet_javascript = ""
     bookmarklet_javascript += "javascript:(function(){"
