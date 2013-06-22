@@ -66,40 +66,45 @@ div#popup {
         {% endfor %} 
 
     </table>
-    <div id="popup">
-        <h3>Headline Comment: </h3>
-        <div id="grabnrun"></div>
+    <div id="coo">
+        <p>hideme</p>
     </div>
     
 <script>
-    $(function() {
+   $(function() {
       var moveLeft = 20;
       var moveDown = 10;
-    
-      $('.trigger').hover(function(e) {
-        var id = jQuery(this).attr("id");
+      var lid;
+      var crazy;
+      $('div#coo').hide();
+      $('.trigger').each(function(){
+        var id=$(this).attr("id");
         comment(id);
-        $("div#grabnrun").text(crazy);
-        $('div#popup').show();
+        $.when(comment(id)).then(function(a1){
+            var inner = "<div class=\""+id+"\"<h3>Headline Comment:</h3><div>"+ crazy +"</div></div>";
+            $("div#coo").append(inner);
+        })
+      $('.trigger').hover(function(e) {
+        lid = jQuery(this).attr("id");
+        comment(lid);
+        $('div.'+lid).show();
           //.css('top', e.pageY + moveDown)
           //.css('left', e.pageX + moveLeft)
           //.appendTo('body');
       }, function() {
-        $('div#popup').hide();
-        $('div#grabnrun').text(' ');
+        $('div.'+lid).hide();
       });
-    
       $('.trigger').mousemove(function(e) {
-        $("div#popup").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+        $("div."+lid).css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
       });
     
     });
-    var crazy;
-    var comment = function(id){
-        $.get("/comment_handler/",{"article_id":id}).done(function(data){
+    }
+    function comment(some){
+        $.get("/comment_handler/",{"article_id":some}).done(function(data){
             commentContent = jQuery.parseJSON(data);
             crazy=commentContent.headline.comment;
+            console.log(crazy);
         })
-        
     }
 </script>
