@@ -238,11 +238,13 @@ def my_articles(request):
 # Format: article/{article_id}/{user name}/{loc_url}
 # Test URL: http://127.0.0.1:8000/article/1/vbhartia/I_like_rice          
 def render_article(request, article_id, user_name, loc_url):
+    current_article = reader_article_store.objects.get(id = article_id)
     return render_to_response(
                             'main_RWM_template.html',
                                 {
                                 'show':'article_base',
                                 'user':request.user,
+                                'article':current_article
                                 }
                             )
 

@@ -4,7 +4,7 @@
 {% load staticfiles %}
 
 <head>
-<title></title>
+<title>{{ current_article.headline }}</title>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 </head>
 <br />
@@ -58,16 +58,6 @@
     </style>
 
     <!-- Facebook Metatags -->
-
-
-
-
-
-    
-
-
-
-
 
     <div id='content_container'>
         
@@ -143,17 +133,20 @@
                         <div class="article_content_Render_class">
 
                             <div id='RWM_headline'>
+                                {{ current_article.headline }}
+                                
                             </div>
                                     
                             <br/>
                                     
                             <div id='RWM_description'>
+                                {{ current_article.description }}
                             </div>
                             
                             <br/>
                             
-                            <img id='RWM_news_picture' />
-                                    
+                            <img src="{{ current_article.image_url }}" id='RWM_news_picture' />
+                            
                             <br/>
                             
                             <div id='RWM_news_source'>
@@ -162,6 +155,7 @@
                             <br/>
                             
                             <div id='RWM_author'>
+                                {{ current_article.author }}
                             </div>
                             
                             <br/>
@@ -228,14 +222,14 @@
 
     function add_article_content()
     {
-        $('#RWM_headline').append(articleContent.headline)
+        $('#RWM_headline').html(articleContent.headline)
         
-        $('title').append(articleContent.headline)
+        $('title').html(articleContent.headline)
 
-        $('#RWM_description').append(articleContent.description)    
-        $('#RWM_news_source').append(articleContent.site_name)
+        $('#RWM_description').html(articleContent.description)    
+        $('#RWM_news_source').html(articleContent.site_name)
         $('#RWM_news_picture').attr("src", articleContent.image_url)
-        $('#RWM_author').append(articleContent.author)
+        $('#RWM_author').html(articleContent.author)
 
         $("#RWM_news_picture").load(function() 
         {
