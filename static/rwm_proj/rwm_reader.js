@@ -11,8 +11,9 @@ js.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
 
 document.head.appendChild(js);
 
-var domain = "http://rwm-stage.herokuapp.com/"
+var domain = "http://rwm-stage.herokuapp.com"
 //var domain = "http://127.0.0.1:8000"
+alert(document.domain)
 
 var scraper_url = domain + "/static/screen_scraper.js?x=" + (Math.random())
 var final_article
@@ -21,8 +22,26 @@ setTimeout(function()
 {
   $.getScript(scraper_url, function()
   {
-    final_article = Get_Article_Content()
-    create_container()
+
+    if(window.location == "http://rwm-stage.herokuapp.com/")
+    {
+
+      alert("Please add this URL to your bookmarks, and use it to read news articles")
+
+    }
+    else if(document.domain == 'rwm-stage.herokuapp.com')
+    {
+
+      alert("Read With Me is already active")
+
+    }
+    
+    else
+    {
+
+      final_article = Get_Article_Content()
+      create_container()
+    }
   })
 },
 500);

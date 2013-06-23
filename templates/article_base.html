@@ -395,7 +395,14 @@
 
     function UpdateHeadlineComment()
     {
-        $('#headline_comment_id').html(commentContent.headline.comment)
+        var append_headline = ""
+            append_headline += "<h4 style='text-align:left; color:gray'>"
+            append_headline += getUsername()
+            append_headline += ": "
+            append_headline += "</h4>"
+            append_headline += commentContent.headline.comment
+
+        $('#headline_comment_id').html(append_headline)
 
     }
 
@@ -439,7 +446,6 @@
 
     function getSharing()
     {
-        //article_url = domain + "/" + "article" + "/" + ArticleContent.server_id + "/" + ArticleContent.creator_username + "/" + ArticleContent.loc_url
 
         var article_url = window.location.href
 
