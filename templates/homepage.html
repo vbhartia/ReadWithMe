@@ -22,6 +22,11 @@
     z-index: 5;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    font-family: 'courier new'monospace; 
+    border:5px solid black;
+    color: blue;
+    text-decoration:underline;
+
 }
     </style>
 
@@ -48,26 +53,29 @@
 
                 <td>
                         <h2>
-                            Drag "Read With Me" into the favorites bar
+                            1. 
+                            <a class = "new_user_a_id" style="color:blue" >
+                                Create an account 
+                            </a>
+                            or
+                            <a class = "login_a_id" style="color:blue">
+                               login
+                            </a>
                         </h2>
-                        <br/>
-                        <br/>
+                        <h2>
+                            2. Drag <span style="font-family: 'courier new', monospace; border:5px solid black">
+                            <a id="bookmarkme" href="#" rel="sidebar"> Read With Me </a></span>  into the favorites bar
+                        </h2>
                             
+                            <br/>
+                            <br/>
+                            <br/>
+
                         <div id="instruction_window">
 
                             <img id="browser_header" src="http://127.0.0.1:8000/static/Browswer_header_no_rwm.png">
-                            
-                            <br/>
-                            <br/>
-                            <br/>
 
                         </div>
-                        <br/>
-                        <br/>
-                        <br/>
-                        DRAG ME --> 
-                        <a id="bookmarkme" href="#" rel="sidebar" title="add to bookmarks">Read With Me</a>
-                         <-- To Favorites
                         
                 </td>
             </tr>
@@ -167,7 +175,6 @@
     })
 
 
-
         setInterval(
                     function()
                     {
@@ -185,13 +192,12 @@
                             .animate(
                                 {crSpline: $.crSpline.buildSequence(
                                     [[start.x, start.y], 
-                                     [start.x + 100, start.y - 50],
                                      [end.x, end.y]])
                                 },
                                     3000, //time
                                     function() 
                                     {
-                                        $('.mover').remove()
+                                        $('#icon').remove()
                                         $('#browser_header').attr("src","/static/Browswer_header_with_rwm.png");
                                     }
 
