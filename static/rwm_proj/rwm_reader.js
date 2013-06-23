@@ -13,7 +13,7 @@ document.head.appendChild(js);
 
 var domain = "http://rwm-stage.herokuapp.com"
 //var domain = "http://127.0.0.1:8000"
-alert(document.domain)
+
 
 var scraper_url = domain + "/static/screen_scraper.js?x=" + (Math.random())
 var final_article
@@ -32,7 +32,7 @@ setTimeout(function()
     else if(document.domain == 'rwm-stage.herokuapp.com')
     {
 
-      alert("Read With Me is already active")
+      alert("You are already using Read With Me")
 
     }
     
