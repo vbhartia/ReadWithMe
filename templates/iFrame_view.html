@@ -470,7 +470,7 @@ function enable_commenting()
             user_comment += "<div class='rwm_comment_class' "
             user_comment += "style='top:"
             user_comment += (commentLoc.top - divCommentLoc.top)
-            user_comment +="px'>"
+            user_comment +="px; overflow:auto'>"
             user_comment +='<strong>' + ArticleContent.creator_username + ': </strong>'
             user_comment +='<br/>'
             user_comment +='<input type="text" id="user_comment_RWM_Viewer" class="inline_comment_input_class"/>'
