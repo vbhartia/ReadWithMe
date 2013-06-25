@@ -58,6 +58,18 @@
     </style>
 
     <!-- Facebook Metatags -->
+    <meta property='og:title' content='{{ user.first_name }}&#39;s thoughts on {{ current_article.headline }}' />"
+
+
+    //Site Name
+    <meta property='og:site_name' content='Read With Me' />"
+
+    //Type
+    <meta property='og:type' content='article' />
+
+
+
+
 
     <div id='content_container'>
         
@@ -371,7 +383,7 @@
             user_comment += "<div class='rwm_comment_class' "
             user_comment += "style='top:"
             user_comment += (commentLoc.top - divCommentLoc.top)
-            user_comment += "px; overflow:scroll;'>"
+            user_comment += "px; overflow:auto'>"
             user_comment += '<strong>'
             user_comment += commentContent.inline[i].username + ': <br/>'
             user_comment += '</strong>'
